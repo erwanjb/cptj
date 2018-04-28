@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "start": "npm run dev",
     "server": "nodemon index.js",
     "dev": "npm run vue | npm run server",
     "vue": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
