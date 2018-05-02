@@ -6,6 +6,7 @@ const cookieParser =require('cookie-parser');
 
 const app = express();
 const port = 8080;
+const adresse_ip= 172.30.170.155;
 const CryptoJS = require("crypto-js");
 
 app.set('trust proxy', 1);
@@ -47,4 +48,4 @@ const chrono = require("./chronologique")(app);
 const actu = require("./actualite")(app);
 const apropos = require("./apropos")(app); 
 
-app.listen(port);
+app.listen(port,adresse_ip);
