@@ -2,6 +2,7 @@
     <div id="main_apropos">
     	<div id="admin" v-if="$session.exists()">
     		<form @submit.prevent class="envoie">
+    			<p>pour modifier le à propos</p>
 	    		<textarea v-model="aproposBis" cols="40" rows="10"></textarea>
 	    		<button @click="modifApropos()">click</button>
 	    	</form>

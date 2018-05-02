@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser =require('cookie-parser');
 
 const app = express();
-const port = 3001;
+const port = 8080;
 const CryptoJS = require("crypto-js");
 
 app.set('trust proxy', 1);
@@ -13,7 +13,7 @@ app.set('trust proxy', 1);
 // permettre les appels AJAX cross-origins (CORS...)
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:8080'
+  origin: 'http://localhost:8081'
 }));
 
 app.use(bodyParser.json());
