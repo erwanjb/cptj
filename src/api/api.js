@@ -40,10 +40,12 @@ app.get('/', function(req, res){
 
 
 
-const portail = require("./portail")(app);
-const theme = require("./theme")(app);
-const chrono = require("./chronologique")(app);
-const actu = require("./actualite")(app);
-const apropos = require("./apropos")(app); 
+// const portail = require("./portail")(app);
+// const theme = require("./theme")(app);
+// const chrono = require("./chronologique")(app);
+// const actu = require("./actualite")(app);
+// const apropos = require("./apropos")(app); 
 
 app.listen(port,ip);
+
+console.log(port);
