@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const session = require('express-session');
+const session = require('cookie-session');
 const bodyParser = require('body-parser');
 const cookieParser =require('cookie-parser');
 
@@ -19,9 +19,8 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({
-	secret: "Shh, its a secret!",
-	saveUninitialized: false,
-	resave: false
+	name: session,
+	keys: ['key1', 'key2']
 }));
 
 // ## CORS middleware
