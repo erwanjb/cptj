@@ -1,1 +1,1 @@
-require("./src/api/api");
+require("./public/src/api/api");
