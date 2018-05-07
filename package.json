@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "author": "erwanjb <wawan.jb@gmail.com>",
   "license": "MIT",
-  "private": true,
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
