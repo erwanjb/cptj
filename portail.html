@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1">
+    <title>portail</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="app">
+      <main id="connection">
+        <form @submit.prevent>
+          <input type="text" v-model="user.identifiant">
+          <input type="password" v-model="user.password">
+          <button @click="connection()">click</button>
+        </form>
+        <div>
+          <div id="message">{{message}}</div>
+        </div>
+        <a href="index.html">Retour à l'accueil</a>
+      </main>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/axios/dist/axios.js"></script>
+    <script src="./node_modules/vue-session/index.unpkg.js"></script>
+    <script>
+      var app = new Vue({
+        el: '#app',
+        data : {
+          message:null,
+          user: {
+            identifiant :null,
+            password :null  
+          },
+        },
+        methods:{
+          connection(){
+            axios({
+                method: "post",
+                url: "http://cptj2-cptj2.7e14.starter-us-west-2.openshiftapps.com/portail",
+              withCredentials:true,
+                data:{
+                  u:this.user
+                }
+            })
+            .then(res => {
+              if('token' in res.data){
+                this.$session.start();
+                //this.$session.set('jwt', res.data.token);
+                this.message="vous êtes connecté";
+              }else{
+                this.message="vous n'avez pas les droits";
+              }
+            });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
