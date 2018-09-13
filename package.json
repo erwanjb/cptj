@@ -5,9 +5,9 @@
   "author": "erwanjb <wawan.jb@gmail.com>",
   "license": "MIT",
   "private": true,
-  "main": "node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+  "main": "node_modules/webpack-dev-server/bin/server2.js",
   "scripts": {
-    "start": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "start": "node node_modules/webpack-dev-server/bin/server2.js",
     "server": "nodemon index.js",
     "dev": "npm run vue | npm run server",
     "vue": "cross-env NODE_ENV=development webpack-dev-server",

@@ -14,11 +14,14 @@ module.exports = (app) => {
 
 	const portailAPI = (ap) =>{
 		ap.post("/portail", (req,res)=>{
-			const r ="SELECT * FROM connexion WHERE identifiant='"+req.body.u.identifiant+"' AND motdepasse='"+CryptoJS.MD5(req.body.u.password).toString()+"'";
+            var password = 'teyfdsiu';
+            var encrypted = CryptoJS.AES.encrypt(req.body.u.password, password).toString();
+            var decrypted  = CryptoJS.AES.decrypt(encrypted, password).toString(CryptoJS.enc.Utf8);
+            const r = "SELECT * FROM connexion WHERE identifiant='"+req.body.u.identifiant+"'";
 			connection.query(r, (error, results, fields) => {
         		if (error) throw error;
         		else{
-        			if(results.length==1){
+        			if(CryptoJS.AES.decrypt(results[0].motdepasse, password).toString(CryptoJS.enc.Utf8) === decrypted){
         				req.session.adminConnected=true;
                         const loged = {
                             token:true
