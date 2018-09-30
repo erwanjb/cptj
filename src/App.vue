@@ -32,25 +32,27 @@ $color:#ED6E13;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: black;
 }
 @font-face {
   font-family: "Dinski";
-  src: url('/dist/assets/DinskiCPTJ.ttf');
+  //src: url('./dist/assets/DinskiCPTJ.ttf');
+  src: url('./assets/DinskiCPTJ.ttf');
   font-weight: bold;
 }
 @font-face{
   font-family: "LemonMilk";
-  src: url("/dist/assets/LemonMilk/LemonMilklightitalic.otf");
+  //src: url('./dist/assets/LemonMilk/LemonMilklightitalic.otf')
+  src: url("./assets/LemonMilk/LemonMilklight.otf");
 }
 h1, h2 {
   font-weight: normal;
-  font-family: "Dinski";
-  color: $color;
-}
-h3{
-  color: blue;
   font-family: "LemonMilk";
+  color: black;
+}
+
+main{
+  padding-top:120px;
 }
 p{
   font-family: Helvetica;

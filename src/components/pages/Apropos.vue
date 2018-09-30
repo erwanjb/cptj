@@ -1,6 +1,13 @@
 <template lang="html">
     <div id="main_apropos">
-    	<h2>A Propos</h2>
+    	<h2>{{titre}}</h2>
+    	<div v-if="$session.exists()">
+    		<button @click="showTitre()">change titre</button>
+    		<form @submit.prevent v-if="bool" id="titre">
+    			<input type="text" v-model="titreBis">
+    			<button @click="modifTitre()">click</button>
+    		</form>
+    	</div>
     	<div id="admin" v-if="$session.exists()">
     		<form @submit.prevent class="envoie">
     			<p>pour modifier le à propos</p>
@@ -20,7 +27,10 @@ export default {
 		return{
 			apropos:null,
 			aproposBis:null,
-			message:null
+			message:null,
+			titre:null,
+			titreBis:null,
+			bool:false,
 		}
 	},
 	mounted(){
@@ -30,6 +40,18 @@ export default {
 		})
 		.then(res=>{
 			this.apropos=res.data;
+		});
+		axios({
+			method:"post",
+			url:"/titre",
+			data:{
+				u:{
+					page:"apropos"
+				}
+			}
+		})
+		.then(res=>{
+			this.titre=res.data;
 		});
 	},
 	methods:{
@@ -48,15 +70,41 @@ export default {
 						}
 					})
 					.then(res=>{
-						if (res.data="OK") {
-							this.message="le à propos a été changé"
+						if (res.data=="OK") {
+							this.message="le à propos a été changé";
+						}else if(res.data=="ER"){
+							this.message="veuillez vous connecter, vous n'avez pas d'autorisation";
 						}
 					});
 				}else{
 					this.message="veuillez saisir les champs";
 				}
 			}
-		}
+		},
+		showTitre(){
+			this.bool=!this.bool;
+		},
+		modifTitre(){
+			if(this.$session.exists()){
+				axios({
+					method:"post",
+					url:"/titre/modifTitre",
+					data:{
+						u:{
+							page:"apropos",
+							titre:this.nl2br(this.titreBis).replace(/'/gi,"\\'"),
+						}
+					}
+				})
+				.then(res=>{
+					if(res.data=="OK"){
+						this.message="le titre a été modifié";
+					}else if(res.data=="ER"){
+						this.message="vous n''avez pas les droits, connectez vous";
+					}
+				});
+			}
+		},
 	}
 }
 </script>

@@ -13,7 +13,7 @@ app.set('trust proxy', 1);
 // permettre les appels AJAX cross-origins (CORS...)
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:8081'
+  origin: /*'http://localhost'*/'http://localhost:8081'
 }));
 
 app.use(bodyParser.json());
@@ -47,6 +47,8 @@ const chrono = require("./chronologique")(app);
 const actu = require("./actualite")(app);
 const apropos = require("./apropos")(app);
 const press = require("./press")(app); 
+const reseau = require("./reseau")(app);
+const titre = require("./titre")(app);
 
 app.listen(port,ip);
 

@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+const utils = require('./utils')
 
 module.exports = {
   entry: './src/main.js',
@@ -53,6 +54,14 @@ module.exports = {
             ]
           }
           // other vue-loader options go here
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       },
       {

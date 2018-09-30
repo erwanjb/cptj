@@ -1,12 +1,8 @@
 <template lang="html">
 	<header id="header_main">
-		<img class="mask" src="dist/assets/logoCPTJ.png">
+		<img class="mask" src="./dist/assets/logoCPTJ.png">
 		<h1>
-			<span class="blanc">#</span>
-			<span>CACHE</span>
-			<span class="blanc">PAS</span>
-			<span>TA</span>
-			<span class="blanc">JOIE</span>
+			Révéler le positif en toute chose
 		</h1>
 	</header>
 </template>

@@ -1,6 +1,13 @@
 <template lang="html">
     <div id="main_repress">
-    	<h2>Revue de Presse</h2>
+    	<h2>{{ titre }}</h2>
+    	<div v-if="$session.exists()">
+    		<button @click="showTitre()">change titre</button>
+    		<form @submit.prevent v-if="bool2" id="titre">
+    			<input type="text" v-model="titreBis">
+    			<button @click="modifTitre()">click</button>
+    		</form>
+    	</div>
     	<div id="admin" v-if="$session.exists()">
     		<form @submit.prevent class="envoie">
     			<p>ajouter une revue de presse</p>
@@ -13,8 +20,45 @@
     		</form>
     		<form @submit.prevent class="envoie">
     			<p>supprimer une revue de presse</p>
-    			<input type="date" v-model="pressBis"><br>
+    			<input type="text" v-model="pressBis"><br>
     			<button @click="suppress()">click</button>
+    		</form>
+    		<form @submit.prevent class="envoie">
+    			<p>modifier un élément d'une revue de presse</p>
+    			<input type="text" v-model="pressBisBis.titre">
+    			<button @click="modifPress()">click</button>
+    			<div v-if="bool">
+    				<p>quel(s) élément(s) de la revue de press voudriez vous changer ?</p>
+    				<label for="titre">titre</label><input type="checkbox" v-model="choix[0]" value="titre" id="titre">
+    				<div v-if="choix[0]">
+    					<p>le titre de la revue de press est: {{ pressBisBis.titre }}</p>
+						<input type="text" v-model="pressBisBisBis.titre" placeholder="change titre">
+    				</div>
+    				<hr>
+    				<label for="press">revue de presse</label><input type="checkbox" v-model="choix[1]" value="press" id="press">
+    				<div v-if="choix[1]">
+    					<textarea v-model="pressBisBisBis.press" placeholder="change revue de presse"></textarea>
+    				</div>
+    				<hr>
+    				<label for="date">date</label><input type="checkbox" v-model="choix[2]" value="date" id="date">
+    				<div v-if="choix[2]">
+    					<p>la  date de la revue de presse est: {{ pressBisBis.date }}</p>
+						<input type="date" v-model="pressBisBisBis.date" placeholder="jj/mm/aaaa">
+    				</div>
+    				<hr>
+    				<label for="lien">lien</label><input type="checkbox" v-model="choix[3]" value="lien" id="lien">
+    				<div v-if="choix[3]">
+    					<div v-if="pressBisBis.lienSource">
+    						<p>la source du lien est: {{ pressBisBis.lienSource }}</p>
+    						<p>l'intilulé du lien est: {{ pressBisBis.lienInt }}</p>
+    					</div>
+    					<p v-else>pas de lien pour cette revue de presse, en ajouter?</p>
+    					<input type="text" v-model="pressBisBisBis.lienSource" placeholder="change source du lien">
+						<input type="text" v-model="pressBisBisBis.lienInt" placeholder="change intitulé du lien">
+    				</div>
+    				<hr>
+    				<button @click="modifPressBis()">modifier</button>
+    			</div>
     		</form>
     		<p id="message">{{message}}</p>
     	</div>
@@ -44,7 +88,27 @@ export default {
 				lienInt:null
 			},
 			pressBis:null,
-			message:null
+			pressBisBis:{
+				press:null,
+				titre:null,
+				date:null,
+				lienSource:null,
+				lienInt:null
+			},
+			pressBisBisBis:{
+				press:null,
+				titre:null,
+				date:null,
+				lienSource:null,
+				lienInt:null
+			},
+			message:null,
+			choix:[null,null,null,null],
+			bool:false,
+			titre:null,
+			titreBis:null,
+			bool2:false,
+
 		}
 	},
 	methods:{
@@ -65,13 +129,15 @@ export default {
 									titre:this.press.titre.replace(/'/gi,"\\'"),
 									date:this.press.date,
 									lienSource:this.press.lienSource,
-									lienInt:this.press.lienInt.replace(/'/gi,"\\'")
+									lienInt: (this.press.lienInt) ? this.press.lienInt.replace(/'/gi,"\\'"):null
 								}
 							}
 						})
 						.then(res=>{
 							if (res.data=="NO") {
-								this.message="il y a déjà une revue de presse à cette date";
+								this.message="il y a déjà une revue de presse à ce titre";
+							}else if(res.data=="ER"){
+								this.message="vous n'avez pas d'autorisation, connectez vous";
 							}else{
 								this.message="la revue de presse a été ajouté";
 							}
@@ -91,12 +157,14 @@ export default {
 						method:"post",
 						url:"/press/supPress",
 						data:{
-							u:this.pressBis
+							u:this.pressBis.replace(/'/gi,"\\'")
 						}
 					})
 					.then(res=>{
 						if (res.data=="NO") {
-							this.message="il n'y a pas de revue de presse à cette date";
+							this.message="il n'y a pas de revue de presse à ce titre";
+						}else if(res.data=="ER"){
+							this.message="vous n'avez pas d'autorisation, connectez vous";
 						}else{
 							this.message="la revue de presse a été supprimé";
 						}
@@ -105,7 +173,104 @@ export default {
 					this.message="veuillez saisir les champs";
 				}
 			}
-		}
+		},
+		modifPress(){
+			if(this.$session.exists()){
+				if(this.pressBisBis.titre!=null){
+					axios({
+						method:"post",
+						url:"/press/modifPress",
+						data:{
+							u:this.pressBisBis.titre.replace(/'/gi,"\\'")
+						}
+					})
+					.then(res=>{
+						if (res.data.status=="NO") {
+							this.message="il n'y a pas de revue de presse à ce titre";
+							this.bool=false;
+						}else if(res.data.status=="ER"){
+							this.message="vous n'avez pas d'autorisation, connectez vous";
+							this.bool=false;
+						}else{
+							this.message="vous pouvez modifier la revue de presse";
+							this.pressBisBis.date=res.data.press.date;
+							this.pressBisBis.press=res.data.press.press;
+							this.pressBisBis.lienSource=res.data.press.lienSource;
+							this.pressBisBis.lienInt=res.data.press.lienInt;
+							this.bool=true;
+						}
+					});
+				}else{
+					this.message="veuillez rentrer un titre existant";
+				}
+			}
+		},
+		modifPressBis(){
+			if(this.$session.exists()){
+				if(this.pressBisBisBis.titre==null && this.pressBisBisBis.press==null && this.pressBisBisBis.date==null && this.pressBisBisBis.lienInt==null && this.pressBisBisBis.lienSource==null){
+					this.message="veuillez renseigner au moins un champ à modifier"
+				}else{
+					if(this.pressBisBis.lienSource==null && this.pressBisBis.lienInt==null && (this.pressBisBisBis.lienSource!=null || this.pressBisBisBis.lienInt!=null)){
+						if(this.pressBisBisBis.lienSource == null || this.pressBisBisBis.lienInt == null){
+							this.message="veuiller rentrer un intitulé et un source pour le lien";
+							return;
+						}
+					}
+					if(this.pressBisBisBis.lienSource !== null && this.pressBisBisBis.lienSource.substring(0,4)!=="http"){
+						this.message=="veuillez mettre un lien http(s) pour la source";
+						return;
+					}
+					axios({
+						method:"post",
+						url:"/press/modifPressBis",
+						data:{
+							u:{
+								press:{
+									press:(this.pressBisBisBis.press) ? this.nl2br(this.pressBisBisBis.press).replace(/'/gi,"\\'") : null,
+									titre:(this.pressBisBisBis.titre) ? this.pressBisBisBis.titre.replace(/'/gi,"\\'") : null,
+									date:this.pressBisBisBis.date,
+									lienSource:this.pressBisBisBis.lienSource,
+									lienInt:(this.pressBisBisBis.lienInt) ? this.pressBisBisBis.lienInt.replace(/'/gi,"\\'") : null
+								},
+								titre: this.pressBisBis.titre
+							}
+						}
+					})
+					.then(res=>{
+						if(res.data=="OK"){
+							this.message="la revue de presse a été modifié";
+						}else if(res.data=="ER"){
+							this.message="vous n'avez pas d'autorisation, veuillez vous connecter"
+						}
+						this.bool=false;
+					});
+				}
+			}
+		},
+		showTitre(){
+			this.bool2=!this.bool2;
+		},
+		modifTitre(){
+			if(this.$session.exists()){
+				axios({
+					method:"post",
+					url:"/titre/modifTitre",
+					data:{
+						u:{
+							page:"press",
+							titre:this.nl2br(this.titreBis).replace(/'/gi,"\\'"),
+						}
+					}
+				})
+				.then(res=>{
+					if(res.data=="OK"){
+						this.message="le titre a été modifié";
+					}else if(res.data=="ER"){
+						this.message="vous n''avez pas les droits, connectez vous";
+					}
+				});
+			}
+		},
 	},
 	mounted(){
 		axios({
@@ -114,6 +279,18 @@ export default {
 		})
 		.then(res=>{
 			this.tab=res.data;
+		});
+		axios({
+			method:"post",
+			url:"/titre",
+			data:{
+				u:{
+					page:"press"
+				}
+			}
+		})
+		.then(res=>{
+			this.titre=res.data;
 		});
 	}
 }

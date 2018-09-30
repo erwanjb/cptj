@@ -32,7 +32,7 @@ export const routes = [
 	},
 	{
 		path:"/apropos",
-		name:"apropos",
+		name:"à propos",
 		component:Apropos
 	},
 	{
