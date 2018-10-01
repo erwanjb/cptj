@@ -36,13 +36,11 @@ $color:#ED6E13;
 }
 @font-face {
   font-family: "Dinski";
-  //src: url('./dist/assets/DinskiCPTJ.ttf');
   src: url('./assets/DinskiCPTJ.ttf');
   font-weight: bold;
 }
 @font-face{
   font-family: "LemonMilk";
-  //src: url('./dist/assets/LemonMilk/LemonMilklightitalic.otf')
   src: url("./assets/LemonMilk/LemonMilklight.otf");
 }
 h1, h2 {
