@@ -41,8 +41,8 @@
       </router-link>
     </ul>
     <ul id="show" class="cache">
-      <router-link v-for="(page, n) in pages3"
-      :to="{name: page}" :key="n" tag="li"
+      <router-link v-for="(page, n) in pages3" 
+      :to="{name: page}" @click.native="hide_listesBis()" :key="n" tag="li"
       class="itemBis" active-class="is-active" exact>
         <span>{{ page }}</span>
       </router-link>
@@ -149,6 +149,10 @@ export default{
       navMain.style.height= "75px";
       separateur.setAttribute("class","cache");
       document.querySelector(".item:nth-child(2)").style.borderRight = "1px solid";
+    },
+    hide_listesBis(){
+      const show = document.getElementById("show");
+      show.setAttribute("class", "cache");
     }
   }
 }
