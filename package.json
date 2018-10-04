@@ -34,9 +34,9 @@
     "mysql": "^2.15.0",
     "popper.js": "^1.14.4",
     "utils": "^0.3.1",
-    "vue": "latest",
+    "vue": "^2.5.16",
     "vue-awesome": "^2.3.7",
-    "vue-router": "latest",
+    "vue-router": "^3.0.1",
     "vue-session": "^1.0.0"
   },
   "browserslist": [

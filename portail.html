@@ -37,8 +37,8 @@
           connection(){
             axios({
                 method: "post",
-                url: "http://cptj2-cptj2.7e14.starter-us-west-2.openshiftapps.com/portail",
-              withCredentials:true,
+                url: "http://localhost:8080/portail",
+                withCredentials:true,
                 data:{
                   u:this.user
                 }

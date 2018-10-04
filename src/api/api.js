@@ -13,7 +13,7 @@ app.set('trust proxy', 1);
 // permettre les appels AJAX cross-origins (CORS...)
 app.use(cors({
   credentials: true,
-  origin: /*'http://localhost'*/'http://localhost:8081'
+  origin: 'http://localhost'
 }));
 
 app.use(bodyParser.json());
