@@ -24,7 +24,7 @@
 					<button @click="show">change</button>
 					<form  @submit.prevent class="hide">
 						<input type="text" v-model="resBis.fac">
-						<button @click="changeRes('you',resBis.fac)">click</button>
+						<button @click="changeRes('fac',resBis.fac)">click</button>
 					</form>
 				</div>
 			</div>
@@ -39,7 +39,7 @@
 					<button @click="show">change</button>
 					<form  @submit.prevent class="hide">
 						<input type="text" v-model="resBis.ins">
-						<button @click="changeRes('you',resBis.ins)">click</button>
+						<button @click="changeRes('ins',resBis.ins)">click</button>
 					</form>
 				</div>
 			</div>

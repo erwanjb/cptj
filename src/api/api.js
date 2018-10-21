@@ -7,13 +7,13 @@ const cookieParser =require('cookie-parser');
 const app = express();
 const port = 8080;
 const CryptoJS = require("crypto-js");
-const ip ='0.0.0.0';
+
 app.set('trust proxy', 1);
 
 // permettre les appels AJAX cross-origins (CORS...)
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost'
+  origin: ['https://test-ejb.ovh','https://www.test-ejb.ovh']
 }));
 
 app.use(bodyParser.json());
@@ -50,6 +50,6 @@ const press = require("./press")(app);
 const reseau = require("./reseau")(app);
 const titre = require("./titre")(app);
 
-app.listen(port,ip);
+app.listen(port);
 
 console.log(port);

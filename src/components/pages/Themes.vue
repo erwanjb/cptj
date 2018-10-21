@@ -321,7 +321,7 @@ export default {
 		},
 		modifVideoBis(){
 			if(this.$session.exists()){
-				if(this.videoBisBisBis.date === null && this.videoBisBisBis.titre === null && this.videoBisBisBis.date.length === 0){
+				if(this.videoBisBisBis.date === null && this.videoBisBisBis.titre === null && this.videoBisBisBis.categorie.length === 0){
 					this.message="Veuillez renseigner au moins un élément";
 				}else{
 					axios({
