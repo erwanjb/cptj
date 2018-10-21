@@ -20,8 +20,6 @@
       <li class="item" @click="showlist2()">
         <span>on en parle</span>
       </li>
-      <li id="separateur" class="cache">
-      </li>
       <li class="item" @click="showlist1()">
         <span>vidéos</span>
       </li>
@@ -55,13 +53,10 @@
 <script>
 export default{
   mounted(){
-    const separateur = document.getElementById("separateur");
     const items = document.querySelectorAll("#list .item");
     const list = document.getElementById("list");
     list.insertBefore(items[items.length-1], items[1]);
-    list.insertBefore(separateur, items[1]);
     list.insertBefore(items[items.length-2], items[1]);
-
   },
 	data(){
 		return{
@@ -98,15 +93,12 @@ export default{
       if (hide_list1.getAttribute("class")=="cache"){
         hide_list1.removeAttribute("class");
         navMain.style.height = "130px";
-        separateur.removeAttribute("class");
-        document.querySelector(".item:nth-child(2)").style.borderRight = "none";
+        if(hide_list2.getAttribute("class")!="cache"){
+          hide_list2.setAttribute("class","cache");
+        }
       }else{
         hide_list1.setAttribute("class","cache");
-        if(hide_list2.getAttribute("class")=="cache"){
-          navMain.style.height = "75px";
-          separateur.setAttribute("class","cache");
-          document.querySelector(".item:nth-child(2)").style.borderRight = "1px solid";
-        }
+        navMain.style.height = "75px";
       }
     },
     showlist2(){
@@ -117,15 +109,12 @@ export default{
       if (hide_list2.getAttribute("class")=="cache"){
         hide_list2.removeAttribute("class");
         navMain.style.height = "130px";
-        separateur.removeAttribute("class");
-        document.querySelector(".item:nth-child(2)").style.borderRight = "none";
+        if(hide_list1.getAttribute("class")!="cache"){
+          hide_list1.setAttribute("class","cache");
+        }
       }else{
         hide_list2.setAttribute("class","cache");
-        if(hide_list1.getAttribute("class")=="cache"){
-          navMain.style.height = "75px";
-          separateur.setAttribute("class","cache");
-          document.querySelector(".item:nth-child(2)").style.borderRight = "1px solid";
-        }
+        navMain.style.height = "75px";
       }
     },
     showlistBis(){
@@ -147,7 +136,6 @@ export default{
         hide_list1.setAttribute("class","cache");
       }
       navMain.style.height= "75px";
-      separateur.setAttribute("class","cache");
       document.querySelector(".item:nth-child(2)").style.borderRight = "1px solid";
     },
     hide_listesBis(){
@@ -170,26 +158,30 @@ $color : #ED6E13;
 #nav_main {
   position:fixed;
   display:flex;
+  width:100%;
 }
 #hide1, #hide2{
   position:absolute;
   top:70px;
   width:50%;
 }
+#list{
+  width:100%;
+  justify-content: center;
+}
 #hide1{
-  left:0;
+  left:40%;
 }
 #hide2{
   left:50%;
 }
 #list, #hide1, #hide2 {
   display: flex;
-  justify-content: center;
   align-items: start;
   list-style: none;
   padding: 0;
 }
-#hide1.cache, #hide2.cache, #hamburger.cache,#show.cache,#separateur.cache {
+#hide1.cache, #hide2.cache, #hamburger.cache,#show.cache{
   display:none;
 }
 .itemBis,.item{
@@ -207,12 +199,6 @@ $color : #ED6E13;
 }
 .itemBis:last-child, .item:last-child{
   border-right:none;
-}
-#separateur{
-  width:1px;
-  height: 100px;
-  background-color: black;
-  margin:0;
 }
 .itemBis:hover,.item:hover, .is-active,.boutique:hover {
   color: $color;
