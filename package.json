@@ -8,18 +8,20 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "server": "nodemon index.js",
+    "server": "node index.js",
     "dev": "npm run vue | npm run server",
     "vue": "cross-env NODE_ENV=development webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.0.0",
     "@fortawesome/fontawesome": "^1.1.8",
     "@fortawesome/fontawesome-free-brands": "^5.0.13",
     "@fortawesome/fontawesome-free-regular": "^5.0.13",
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@fortawesome/vue-fontawesome": "0.0.23",
     "axios": "^0.18.0",
+    "babel-plugin-es6-promise": "^1.1.1",
     "bootstrap": "^4.1.1",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.3",
@@ -49,6 +51,8 @@
     "npm": "^5.6.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.26.0",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
