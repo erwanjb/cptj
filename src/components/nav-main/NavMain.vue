@@ -151,6 +151,7 @@ $color : #ED6E13;
   width:200px;
   height:75px;
   background-color:white;
+  z-index: 1;
 }
 #span{
   display:flex;
@@ -193,6 +194,7 @@ $color : #ED6E13;
   font-family: "LemonMilk";
   font-size: 20px;
   background-color: white;
+  z-index: 1;
 }
 .item{
     border-right: 1px solid;
