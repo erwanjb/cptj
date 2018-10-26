@@ -169,4 +169,9 @@ export default{
 		display:flex;
 		flex-direction: column;
 	}
+	@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none){
+		footer p{
+			margin-top: 100px;
+		}
+	}
 </style>
