@@ -9,7 +9,7 @@
     		</form>
     	</div>
     	<p>{{message}}</p>
-    	<form action="https://formspree.io/wawan.jb@gmail.com" method="post">
+    	<form action="https://formspree.io/cptjcontact@gmail.com" method="post">
 			<input type="email" id="email" name="email"placeholder="Mail"><br>
 			<input type="text" id="nom" name="nom" placeholder="Prénom ou Pseudo"><br>
 			<textarea id="text" cols="60" rows="10" name="text" placeholder="Message"></textarea><br>
