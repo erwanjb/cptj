@@ -13,7 +13,7 @@ app.set('trust proxy', 1);
 // permettre les appels AJAX cross-origins (CORS...)
 app.use(cors({
   credentials: true,
-  origin: ['https://test-ejb.ovh','https://www.test-ejb.ovh']
+  origin: ['https://cachepastajoie.fr','https://www.cachepastajoie.fr']
 }));
 
 app.use(bodyParser.json());
