@@ -1,10 +1,10 @@
 <template lang="html">
 	<footer>
-		<p>&copy; Mentions légales</p>
+		<p>&copy; Tous droits réservés Alice Reynaud</p>
 		<div id="reseau">
 			<div class="res">
-				<a href="https://www.youtube.com/channel/UC1auzQbFso05Rw4HvmXXsoQ">
-					<i class="fab fa-youtube reseau you fa-2x"></i>
+				<a class="cont-res you2" href="https://www.youtube.com/channel/UC1auzQbFso05Rw4HvmXXsoQ">
+					<i class="fas fa-play reseau you"></i>
 				</a>
 				<span>{{res.you}}</span>
 				<div v-if="$session.exists()">
@@ -16,8 +16,8 @@
 				</div>
 			</div>
 			<div class="res">
-				<a href="https://fr-fr.facebook.com/cachepastajoie/">
-					<i class="fab fa-facebook reseau fac fa-2x"></i>
+				<a class="cont-res fac2" href="https://fr-fr.facebook.com/cachepastajoie/">
+					<i class="fab fa-facebook-f reseau fac fa-2x"></i>
 				</a>
 				<span>{{res.fac}}</span>
 				<div v-if="$session.exists()">
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<div class="res">
-				<a href="https://www.instagram.com/cachepastajoie/?hl=fr">
+				<a class="cont-res ins" href="https://www.instagram.com/cachepastajoie/?hl=fr">
 					<span id="ins">
 						<i class="fab fa-instagram reseau ins fa-2x"></i>
 					</span>
@@ -45,6 +45,9 @@
 			</div>
 			<span>{{message}}</span>				
 		</div>
+		<a href="#" id="ancre">
+			<i class="fas fa-anchor fa-2x"></i>
+		</a>
 	</footer>
 </template>
 <script>
@@ -132,23 +135,45 @@ export default{
 		justify-content:center;	
 	}
 	#reseau{
-		width:150px;
+		position: fixed;
+		margin-right: 50px;
+		top: 0;
+		right: 0;
 		display:flex;
-		justify-content:space-between;
+		flex-direction: column;
+		justify-content:space-around;
+		height: 100vh;
+		z-index: 4;
+	}
+	.cont-res{
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	.you{
-		color:#d70000;
+		color:white;
+		background-color: #d70000;
 	}
 	.fac{
-		color:#50349f;
+		color:white;
+		background-color: #50349f;
 	}
 	.ins{
 		color:white;
 	}
+	.you2{
+		background-color:#d70000;
+	}
+	.fac2{
+		background-color:#50349f;
+	}
 	#ins{
-		border-radius: 5px;
-		width: 35px;
-		height: 35px;
+		border-radius: 50%;
+		width: 50px;
+		height: 50px;
 		background-image: url("../../assets/ins.jpg");
 		background-size: cover;
 		display:flex;
@@ -159,15 +184,22 @@ export default{
 	.hide{
 		display:none;
 	}
-	@media screen and (max-width:501px){
-		#reseau{
-			position:static;
-			display:block;
-		}
-	}
 	.res{
 		display:flex;
 		flex-direction: column;
+	}
+	#ancre{
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		display: flex;
+		justify-content:center;
+		align-items: center;
+		position: fixed;
+		left: 50px;
+		bottom: 50px;
+		color: white;
+		background-color: orange;
 	}
 	@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none){
 		footer p{

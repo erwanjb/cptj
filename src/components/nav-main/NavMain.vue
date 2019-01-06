@@ -1,56 +1,60 @@
 <template lang="html">
-	<nav id="nav_main">
-    <div id="span">
+  <div>
+    <router-link :to="{name: 'accueil'}">
       <img class="logo" src="../../assets/logoCPTJ.png">
+    </router-link>
+    <div id="span">
       <div id="hamburger" class="cache" @click="showlistBis()">
         <div class="ligne"></div>
         <div class="ligne"></div>
         <div class="ligne"></div>
       </div>
     </div>
-    <ul id="list">
-      <router-link v-for="(page, n) in pages"
-      :to="{name: page}" @click.native="hide_listes()" :key="n" tag="li"
-      class="item" active-class="is-active" exact>
-        <span>{{ page }}</span>
-      </router-link>
-      <li class="item">
-        <a href="https://cachepastajoie.niceshop.co/" class="boutique">Boutique</a>
-      </li>
-      <li class="item" @click="showlist2($event)">
-        <span>on en parle</span>
-      </li>
-      <li class="item" @click="showlist1($event)">
-        <span>vidéos</span>
-      </li>
-    </ul>
-    <div id="video" class="cache"></div>
-    <div id="parle" class="cache"></div>
-    <ul id="hide1" class="cache">
-      <router-link v-for="(page, n) in pages2"
-      :to="{name: page}" :key="n" tag="li"
-      class="item" active-class="is-active" exact>
-        <span >{{ page }}</span>
-      </router-link>
-    </ul>
-    <ul id="hide2" class="cache">
-      <router-link v-for="(page, n) in pages4"
-      :to="{name: page}" :key="n" tag="li"
-      class="item" active-class="is-active" exact>
-        <span>{{ page }}</span>
-      </router-link>
-    </ul>
-    <ul id="show" class="cache">
-      <router-link v-for="(page, n) in pages3" 
-      :to="{name: page}" @click.native="hide_listesBis()" :key="n" tag="li"
-      class="itemBis" active-class="is-active" exact>
-        <span>{{ page }}</span>
-      </router-link>
-      <li class="itemBis">
-        <a href="https://cachepastajoie.niceshop.co/" class="boutique">Boutique</a>
-      </li>
-    </ul>
-  </nav>
+  	<nav id="nav_main">
+      <ul id="list">
+        <router-link v-for="(page, n) in pages"
+        :to="{name: page}" @click.native="hide_listes()" :key="n" tag="li"
+        class="item" active-class="is-active" exact>
+          <span>{{ page }}</span>
+        </router-link>
+        <li class="item">
+          <a href="https://cachepastajoie.niceshop.co/" class="boutique">Boutique</a>
+        </li>
+        <li class="item" @click="showlist2($event)">
+          <span>on en parle</span>
+        </li>
+        <li class="item" @click="showlist1($event)">
+          <span>vidéos</span>
+        </li>
+      </ul>
+      <div id="video" class="cache"></div>
+      <div id="parle" class="cache"></div>
+      <ul id="hide1" class="cache">
+        <router-link v-for="(page, n) in pages2"
+        :to="{name: page}" :key="n" tag="li"
+        class="item" active-class="is-active" exact>
+          <span >{{ page }}</span>
+        </router-link>
+      </ul>
+      <ul id="hide2" class="cache">
+        <router-link v-for="(page, n) in pages4"
+        :to="{name: page}" :key="n" tag="li"
+        class="item" active-class="is-active" exact>
+          <span>{{ page }}</span>
+        </router-link>
+      </ul>
+      <ul id="show" class="cache">
+        <router-link v-for="(page, n) in pages3" 
+        :to="{name: page}" @click.native="hide_listesBis()" :key="n" tag="li"
+        class="itemBis" active-class="is-active" exact>
+          <span>{{ page }}</span>
+        </router-link>
+        <li class="itemBis">
+          <a href="https://cachepastajoie.niceshop.co/" class="boutique">Boutique</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </template>
 <script>
 export default{
@@ -168,16 +172,25 @@ export default{
 <style lang="scss" scoped>
 $color : #ED6E13;
 .logo{
+  display: block;
+  margin: 0 auto;
   width:200px;
   height:75px;
   background-color:white;
   z-index: 1;
 }
 #span{
-  display:flex;
+  display: flex;
+  justify-content:center;
+  position:absolute;
+  width: 100%;
+  top: 150px;
+  left: 0;
 }
 #nav_main {
-  position:fixed;
+  position:absolute;
+  top: 150px;
+  left: 0;
   display:flex;
   width:100%;
 }
@@ -237,8 +250,12 @@ $color : #ED6E13;
   justify-content:space-around;
   align-items:center;
   background-color:white;
+  z-index: 3;
 }
 #show{
+  position: absolute;
+  top: 100px;
+  left: 30%;
   display:flex;
   flex-direction:column;
 }
@@ -260,8 +277,21 @@ $color : #ED6E13;
   #show.cache{
     display:none;
   }
-  #separateur{
-    width:0;
+  #video{
+    display:none;
+  }
+  #parle{
+    display:none;
+  }
+}
+@media screen and (max-width: 687px){
+  #span{
+      top: 180px;
+  }
+}
+@media screen and (max-width: 366px){
+  #span{
+      top: 215px;
   }
 }
 @media screen and (min-width:751px){

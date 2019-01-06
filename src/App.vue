@@ -44,13 +44,20 @@ $color:#ED6E13;
   src: url("./assets/LemonMilk/LemonMilklight.otf");
 }
 h1, h2 {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  text-align: center;
   font-weight: normal;
   font-family: "LemonMilk";
   color: black;
 }
 
 main{
-  padding-top:120px;
+  padding-top:180px;
+  width: 80%;
+  margin: 0 auto;
 }
 p{
   font-family: Helvetica;
