@@ -17,13 +17,15 @@
       <li class="item">
         <a href="https://cachepastajoie.niceshop.co/" class="boutique">Boutique</a>
       </li>
-      <li class="item" @click="showlist2()">
+      <li class="item" @click="showlist2($event)">
         <span>on en parle</span>
       </li>
-      <li class="item" @click="showlist1()">
+      <li class="item" @click="showlist1($event)">
         <span>vidéos</span>
       </li>
     </ul>
+    <div id="video" class="cache"></div>
+    <div id="parle" class="cache"></div>
     <ul id="hide1" class="cache">
       <router-link v-for="(page, n) in pages2"
       :to="{name: page}" :key="n" tag="li"
@@ -85,36 +87,50 @@ export default{
 		}
 	},
   methods:{
-    showlist1(){
+    showlist1(e){
+      const video = document.getElementById("video");
+      const parle = document.getElementById("parle");
       const hide_list1 = document.getElementById("hide1");
       const hide_list2 = document.getElementById("hide2");
       const navMain = document.getElementById("nav_main");
-      const separateur = document.getElementById("separateur");
       if (hide_list1.getAttribute("class")=="cache"){
         hide_list1.removeAttribute("class");
+        hide_list1.style.left = (e.target.offsetLeft +e.target.offsetWidth/2) + 80 + "px";
         navMain.style.height = "130px";
+        video.removeAttribute("class");
+        video.style.top = (e.target.offsetTop +e.target.offsetHeight) + "px";
+        video.style.left = (e.target.offsetLeft +e.target.offsetWidth/2) + "px";
         if(hide_list2.getAttribute("class")!="cache"){
           hide_list2.setAttribute("class","cache");
+          parle.setAttribute("class", "cache");
         }
       }else{
         hide_list1.setAttribute("class","cache");
         navMain.style.height = "75px";
+        video.setAttribute("class", "cache");
       }
     },
-    showlist2(){
+    showlist2(e){
+      const video = document.getElementById("video");
+      const parle = document.getElementById("parle");
       const hide_list2 = document.getElementById("hide2");
       const hide_list1 = document.getElementById("hide1");
       const navMain = document.getElementById("nav_main");
-      const separateur = document.getElementById("separateur");
       if (hide_list2.getAttribute("class")=="cache"){
         hide_list2.removeAttribute("class");
+        hide_list2.style.left = (e.target.offsetLeft +e.target.offsetWidth/2) + 80 + "px";
         navMain.style.height = "130px";
+        parle.removeAttribute("class");
+        parle.style.top = (e.target.offsetTop +e.target.offsetHeight) + "px";
+        parle.style.left = (e.target.offsetLeft +e.target.offsetWidth/2) + "px";
         if(hide_list1.getAttribute("class")!="cache"){
           hide_list1.setAttribute("class","cache");
+          video.setAttribute("class", "cache");
         }
       }else{
         hide_list2.setAttribute("class","cache");
         navMain.style.height = "75px";
+        parle.setAttribute("class", "cache");
       }
     },
     showlistBis(){
@@ -128,12 +144,16 @@ export default{
     hide_listes(){
       const hide_list2 = document.getElementById("hide2");
       const hide_list1 = document.getElementById("hide1");
-      const navMain = document.getElementById("nav_main")
+      const navMain = document.getElementById("nav_main");
+      const video = document.getElementById("video");
+      const parle = document.getElementById("parle");
       if(hide_list2.getAttribute("class")!=="cache"){
         hide_list2.setAttribute("class","cache");
+        parle.setAttribute("class","cache");
       }
       if(hide_list1.getAttribute("class")!=="cache"){
         hide_list1.setAttribute("class","cache");
+        video.setAttribute("class","cache");
       }
       navMain.style.height= "75px";
       document.querySelector(".item:nth-child(2)").style.borderRight = "1px solid";
@@ -151,6 +171,7 @@ $color : #ED6E13;
   width:200px;
   height:75px;
   background-color:white;
+  z-index: 1;
 }
 #span{
   display:flex;
@@ -163,17 +184,18 @@ $color : #ED6E13;
 #hide1, #hide2{
   position:absolute;
   top:70px;
-  width:50%;
+}
+#video,#parle{
+  z-index: 2;
+  position: absolute;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+  width: 80px;
+  height: 40px;
 }
 #list{
   width:100%;
   justify-content: center;
-}
-#hide1{
-  left:40%;
-}
-#hide2{
-  left:50%;
 }
 #list, #hide1, #hide2 {
   display: flex;
@@ -181,7 +203,10 @@ $color : #ED6E13;
   list-style: none;
   padding: 0;
 }
-#hide1.cache, #hide2.cache, #hamburger.cache,#show.cache{
+#hide1, #hide2{
+  margin-top: 0;
+}
+#hide1.cache, #hide2.cache, #hamburger.cache,#show.cache,#video.cache,#parle.cache{
   display:none;
 }
 .itemBis,.item{
@@ -193,6 +218,7 @@ $color : #ED6E13;
   font-family: "LemonMilk";
   font-size: 20px;
   background-color: white;
+  z-index: 1;
 }
 .item{
     border-right: 1px solid;

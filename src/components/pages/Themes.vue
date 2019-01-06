@@ -188,7 +188,7 @@ export default {
 							data:{
 								u:{
 									video:this.video.video,
-									categorie:this.video.categorie.replace(/'/gi,"\\'"),
+									categorie:this.video.categorie,
 									titre:this.video.titre.replace(/'/gi,"\\'"),
 									date:this.video.date,
 									}
