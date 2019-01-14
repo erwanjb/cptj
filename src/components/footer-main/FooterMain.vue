@@ -3,7 +3,7 @@
 		<p>&copy; Tous droits réservés Alice Reynaud</p>
 		<div id="reseau">
 			<div class="res">
-				<a class="cont-res you2" href="https://www.youtube.com/channel/UC1auzQbFso05Rw4HvmXXsoQ">
+				<a class="cont-res you2" target="_blank" href="https://www.youtube.com/channel/UC1auzQbFso05Rw4HvmXXsoQ">
 					<i class="fas fa-play reseau you"></i>
 				</a>
 				<span>{{res.you}}</span>
@@ -16,7 +16,7 @@
 				</div>
 			</div>
 			<div class="res">
-				<a class="cont-res fac2" href="https://fr-fr.facebook.com/cachepastajoie/">
+				<a class="cont-res fac2" target="_blank" href="https://fr-fr.facebook.com/cachepastajoie/">
 					<i class="fab fa-facebook-f reseau fac fa-2x"></i>
 				</a>
 				<span>{{res.fac}}</span>
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<div class="res">
-				<a class="cont-res ins" href="https://www.instagram.com/cachepastajoie/?hl=fr">
+				<a class="cont-res ins" target="_blank" href="https://www.instagram.com/cachepastajoie/?hl=fr">
 					<span id="ins">
 						<i class="fab fa-instagram reseau ins fa-2x"></i>
 					</span>
@@ -141,7 +141,7 @@ export default{
 		right: 0;
 		display:flex;
 		flex-direction: column;
-		justify-content:space-around;
+		justify-content:center;
 		height: 100vh;
 		z-index: 4;
 	}
@@ -187,6 +187,7 @@ export default{
 	.res{
 		display:flex;
 		flex-direction: column;
+		margin-bottom: 50px;
 	}
 	#ancre{
 		width: 50px;

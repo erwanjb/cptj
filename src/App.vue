@@ -55,7 +55,7 @@ h1, h2 {
 }
 
 main{
-  padding-top:180px;
+  padding-top:200px;
   width: 80%;
   margin: 0 auto;
 }

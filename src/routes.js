@@ -17,7 +17,7 @@ export const routes = [
 	},
 	{
 		path:"/actualites",
-		name:"actualites",
+		name:"on en parle",
 		component:Actualites
 	},
 	{
@@ -37,12 +37,12 @@ export const routes = [
 	},
 	{
 		path:"/chronologique",
-		name:"chronologique",
+		name:"toutes les vidéos",
 		component:Chronologique
 	},
 	{
 		path:"/themes",
-		name:"themes",
+		name:"vidéos par thème",
 		component:Themes
 	},
 	{
