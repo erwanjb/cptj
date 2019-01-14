@@ -159,7 +159,7 @@ export default{
 	}
 	.fac{
 		color:white;
-		background-color: #50349f;
+		background-color: #3d5a98;
 	}
 	.ins{
 		color:white;
@@ -168,7 +168,7 @@ export default{
 		background-color:#d70000;
 	}
 	.fac2{
-		background-color:#50349f;
+		background-color:#3d5a98;
 	}
 	#ins{
 		border-radius: 50%;
