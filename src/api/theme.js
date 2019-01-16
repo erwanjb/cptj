@@ -1,16 +1,6 @@
 module.exports = (app) => {
 
-	const mysql = require('mysql');
-
-  	const connection = mysql.createConnection({
-    	host     : 'localhost',
-    	user     : 'root',
-    	password : 'terminator',
-    	database : 'cptj',
-        port     : 3306,
-        multipleStatements: true
-  	});
-  	connection.connect();
+	const connection = require('./connection');
 
 	const themesAPI = (ap) =>{
         ap.get("/themes", (req,res)=>{

@@ -1,16 +1,6 @@
 module.exports = (app) => {
 
-  const mysql = require('mysql');
-  const CryptoJS = require("crypto-js");
-
-  const connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'terminator',
-    database : 'cptj',
-    port     : 3306
-  });
-  connection.connect();
+  const connection = require('./connection');
 
   const reseauAPI = (ap)=>{
     ap.get("/reseau", (req,res)=>{
