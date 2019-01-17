@@ -145,6 +145,7 @@ export default {
 					cat[i].style.display="none";
 				}
 			}
+			document.querySelector(".video_categorie#"+value).style.display = "flex";
 			// if(e.target.parentNode.querySelector(".video_categorie").style.display == "none"){
 			// 	e.target.parentNode.querySelector(".video_categorie").style.display = "flex";
 			// }else{
