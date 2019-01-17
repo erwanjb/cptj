@@ -13,7 +13,7 @@
   	<nav id="nav_main">
       <ul id="list">
         <router-link v-for="(page, n) in pages"
-        :to="{name: page}" @click.native="hide_listes()" :key="n" tag="li"
+        :to="{name: page}" :key="n" tag="li"
         class="item" active-class="is-active" exact>
           <span>{{ page }}</span>
         </router-link>
@@ -59,23 +59,6 @@ export default{
       }else{
         show.setAttribute("class","cache");
       }
-    },
-    hide_listes(){
-      const hide_list2 = document.getElementById("hide2");
-      const hide_list1 = document.getElementById("hide1");
-      const navMain = document.getElementById("nav_main");
-      const video = document.getElementById("video");
-      const parle = document.getElementById("parle");
-      if(hide_list2.getAttribute("class")!=="cache"){
-        hide_list2.setAttribute("class","cache");
-        parle.setAttribute("class","cache");
-      }
-      if(hide_list1.getAttribute("class")!=="cache"){
-        hide_list1.setAttribute("class","cache");
-        video.setAttribute("class","cache");
-      }
-      navMain.style.height= "75px";
-      document.querySelector(".item:nth-child(2)").style.borderRight = "1px solid";
     },
     hide_listesBis(){
       const show = document.getElementById("show");

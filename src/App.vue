@@ -89,10 +89,4 @@ input,textarea{
 footer{
   margin-top:50px;
 }
-@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none){
-  main{
-    position:relative;
-    top:120px;
-  }
-}
 </style>
