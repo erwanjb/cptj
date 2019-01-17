@@ -2,6 +2,9 @@
   <div id="app">
     <nav-main></nav-main>
     <main>
+      <!--[if IE]>
+        <div id="div-ie"></div>
+      <![endif]-->
       <router-view></router-view>
     </main>
     <footer-main></footer-main>
@@ -58,6 +61,10 @@ main{
   padding-top:200px;
   width: 80%;
   margin: 0 auto;
+}
+#div-ie{
+  width: 100%;
+  height: 200px;
 }
 p{
   font-family: Helvetica;
