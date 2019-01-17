@@ -140,13 +140,11 @@ export default {
 			e.preventDefault();
 			const cat = document.getElementsByClassName("video_categorie");
 			const value = e.target.parentNode.querySelector("input").value;
-			console.log(value);
 			for (let i = 0; i < cat.length; i++) {
 				if(cat[i].style.display!="none"){
 					cat[i].style.display="none";
 				}
 			}
-			console.log(document.querySelector(".video_categorie#"+value).style.display = "flex");
 			// if(e.target.parentNode.querySelector(".video_categorie").style.display == "none"){
 			// 	e.target.parentNode.querySelector(".video_categorie").style.display = "flex";
 			// }else{
@@ -310,7 +308,6 @@ export default {
 							this.videoBisBisBis.video=this.videoBisBis.video;
 							this.videoBisBis.titre=res.data.video.titre;
 							this.videoBisBis.categorie=res.data.video.categorie;
-							console.log(this.videoBisBis.categorie);
 							this.bool=true;
 						}
 					});
