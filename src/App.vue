@@ -2,9 +2,7 @@
   <div id="app">
     <nav-main></nav-main>
     <main>
-      <!--[if IE]>
-        <div id="div-ie"></div>
-      <![endif]-->
+      <div id="div-ie"></div>
       <router-view></router-view>
     </main>
     <footer-main></footer-main>
@@ -95,5 +93,11 @@ input,textarea{
 }
 footer{
   margin-top:50px;
+}
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none){  
+  #div-ie{ 
+    width: 100%;
+    height: 200px;  
+  } 
 }
 </style>
