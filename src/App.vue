@@ -94,6 +94,10 @@ input,textarea{
 footer{
   margin-top:50px;
 }
+#div-ie{
+  width: 100%;
+  height: 0px;
+}
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none){  
   #div-ie{ 
     width: 100%;
