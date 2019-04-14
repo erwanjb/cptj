@@ -2,6 +2,7 @@
   <div id="app">
     <nav-main></nav-main>
     <main>
+      <div id="div-ie"></div>
       <router-view></router-view>
     </main>
     <footer-main></footer-main>
@@ -59,6 +60,10 @@ main{
   width: 80%;
   margin: 0 auto;
 }
+#div-ie{
+  width: 100%;
+  height: 200px;
+}
 p{
   font-family: Helvetica;
 }
@@ -88,5 +93,15 @@ input,textarea{
 }
 footer{
   margin-top:50px;
+}
+#div-ie{
+  width: 100%;
+  height: 0px;
+}
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none){  
+  #div-ie{ 
+    width: 100%;
+    height: 200px;  
+  } 
 }
 </style>
