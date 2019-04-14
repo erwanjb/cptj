@@ -83,16 +83,18 @@ module.exports = (app) => {
                             connection.query(q2, (e,r,f)=>{
                                 if (e) throw e;
                                 else{
+                                    let q3= '';
                                     for (let i=0;i<req.body.u.categorie.length;i++){
-                                        let q3="INSERT INTO join_vid_cat (id_video, id_categorie) SELECT video.id, categorie.id FROM video JOIN categorie WHERE video.video='"+video+"' AND categorie.type='"+req.body.u.categorie[i]+"'";
-                                        connection.query(q3,(e2,r2,f2)=>{
-                                            if (e2) throw e2;
-                                            else{
-                                                status.status="OK";
-                                                res.send(status);
-                                            }
-                                        });
+                                        const sql="INSERT INTO join_vid_cat (id_video, id_categorie) SELECT video.id, categorie.id FROM video JOIN categorie WHERE video.video='"+video+"' AND categorie.type='"+req.body.u.categorie[i]+"'";
+                                        q3 += q3 ? ' \; ' + sql : sql;
                                     }
+                                    connection.query(q3,(e2,r2,f2)=>{
+                                        if (e2) throw e2;
+                                        else{
+                                            status.status="OK";
+                                            res.send(status);
+                                        }
+                                    });
                                 }
                             });
                         }
@@ -332,6 +334,7 @@ module.exports = (app) => {
                         q += "\; INSERT INTO join_vid_cat (id_video, id_categorie) SELECT video.id, categorie.id FROM video JOIN categorie WHERE video.video='"+video+"' AND categorie.type='"+categorie[k]+"' ";
                     } 
                 }
+                console.log(q)
                 connection.query(q,(e,r,f)=>{
                     if(e) throw e;
                     else{
