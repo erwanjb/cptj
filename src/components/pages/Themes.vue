@@ -1,6 +1,6 @@
 <template lang="html">
     <div id="main_themes">
-    	<h2>{{titre}}</h2>
+    	<h2 v-if="titre">{{titre}}</h2>
     	<div v-if="$session.exists()">
     		<button @click="showTitre()">change titre</button>
     		<form @submit.prevent v-if="bool2" id="titre">

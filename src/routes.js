@@ -20,21 +20,21 @@ export const routes = [
 		name:"on en parle",
 		component:Actualites
 	},
-	{
-		path:"/revue_de_presse",
-		name:"revue de presse",
-		component:Press
-	},
+	// {
+	// 	path:"/revue_de_presse",
+	// 	name:"revue de presse",
+	// 	component:Press
+	// },
 	{
 		path:"/contact",
 		name:"contact",
 		component:Contact
 	},
-	{
-		path:"/apropos",
-		name:"à propos",
-		component:Apropos
-	},
+	// {
+	// 	path:"/apropos",
+	// 	name:"à propos",
+	// 	component:Apropos
+	// },
 	{
 		path:"/chronologique",
 		name:"toutes les vidéos",

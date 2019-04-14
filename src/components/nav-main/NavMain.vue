@@ -46,7 +46,6 @@ export default{
         "toutes les vidéos",
         "vidéos par thème",
         "on en parle",
-        "à propos",
         "contact"
       ]
 		}

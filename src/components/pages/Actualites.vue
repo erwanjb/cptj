@@ -1,6 +1,6 @@
 <template lang="html">
     <div id="main_actualite">
-    	<h2>{{titre}}</h2>
+    	<h2 v-if="titre">{{titre}}</h2>
     	<div v-if="$session.exists()">
     		<button @click="showTitre()">change titre</button>
     		<form @submit.prevent v-if="bool2" id="titre">
@@ -265,7 +265,7 @@ export default {
 					if(res.data=="OK"){
 						this.message="le titre a été modifié";
 					}else if(res.data=="ER"){
-						this.message="vous n''avez pas les droits, connectez vous";
+						this.message="vous n'avez pas les droits, connectez vous";
 					}
 				});
 			}
