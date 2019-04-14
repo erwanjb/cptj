@@ -230,13 +230,13 @@ module.exports = (app) => {
         ap.post("/themes/addMore",(req,res)=>{
             const categorie = req.body.u.cat;
             const nb = req.body.u.nb;
-            const q = "SELECT video.video, video.titre FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type='"+categorie+"' ORDER BY date DESC LIMIT "+nb+", 5";
+            const q = "SELECT video.video, videodate FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type='"+categorie+"' ORDER BY date DESC LIMIT "+nb+", 5";
             connection.query(q,(e,r,f)=>{
                 if(e) throw e;
                 else{
                     let sections={};
                     sections.tab=r;
-                    const q2="SELECT video.video, video.titre FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type='"+categorie+"' ORDER BY date DESC LIMIT "+(parseInt(nb)+5)+", 1";
+                    const q2="SELECT video.video, video.date FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type='"+categorie+"' ORDER BY date DESC LIMIT "+(parseInt(nb)+5)+", 1";
                     connection.query(q2,(e2,r2,f2)=>{
                         if(e2) throw e2;
                         else{

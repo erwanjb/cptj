@@ -5,7 +5,8 @@ const connection = mysql.createConnection({
 	user     : process.env.USER_DB,
 	password : process.env.PASSWORD_DB,
 	database : 'cptj',
-  	port     : 3306
+  	port     : 3306,
+	multipleStatements: true
 });
 connection.connect();
 
