@@ -25,21 +25,21 @@ app.use(session({
 	saveUninitialized: false,
 	resave: false
 }));
-app.use(express.static(__dirname + '../dist'))
+app.use('/', express.static(__dirname + '../dist'))
 // ## CORS middleware
 // 
 // see: http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
 
 
-app.get('/', function(req, res){
-	if (req.session.toto){
-		req.session.toto++;
-	}else{
-		req.session.toto=1;
-	}
-	res.send("toto vaut:" + req.session.toto);
-	console.log(req.session);
-});
+// app.get('/', function(req, res){
+// 	if (req.session.toto){
+// 		req.session.toto++;
+// 	}else{
+// 		req.session.toto=1;
+// 	}
+// 	res.send("toto vaut:" + req.session.toto);
+// 	console.log(req.session);
+// });
 
 
 const accueil = require("./accueil")(app);
