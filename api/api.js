@@ -52,11 +52,12 @@ const press = require("./press")(app);
 const reseau = require("./reseau")(app);
 const titre = require("./titre")(app);
 
-const options = {
-  key: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/cert.pem'),
-  ca: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/chain.pem')
-}
-https.createServer(options, app).listen(port);
+// const options = {
+//   key: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/privkey.pem'),
+//   cert: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/cert.pem'),
+//   ca: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/chain.pem')
+// }
+// https.createServer(options, app).listen(port);
+app.listen(port)
 
 console.log(port);
