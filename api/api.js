@@ -25,7 +25,7 @@ app.use(session({
 	saveUninitialized: false,
 	resave: false
 }));
-app.use('/', express.static(__dirname + '../dist'))
+app.use('/', express.static(__dirname + '/../dist'))
 // ## CORS middleware
 // 
 // see: http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
