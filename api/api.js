@@ -3,6 +3,8 @@ const cors = require("cors");
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const cookieParser =require('cookie-parser');
+const https = require('https');
+const fs = require('fs');
 
 const app = express();
 const port = 8080;
@@ -13,7 +15,7 @@ app.set('trust proxy', 1);
 // permettre les appels AJAX cross-origins (CORS...)
 app.use(cors({
   credentials: true,
-  origin: ['https://cachepastajoie.fr','https://www.cachepastajoie.fr','http://localhost:8081', 'http://localhost']
+  origin: [/*'https://cachepastajoie.fr','https://www.cachepastajoie.fr','http://localhost:8081', 'http://localhost'*/]
 }));
 
 app.use(bodyParser.json());
@@ -23,7 +25,7 @@ app.use(session({
 	saveUninitialized: false,
 	resave: false
 }));
-
+app.use(express.static(__dirname + '../dist'))
 // ## CORS middleware
 // 
 // see: http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
@@ -50,6 +52,11 @@ const press = require("./press")(app);
 const reseau = require("./reseau")(app);
 const titre = require("./titre")(app);
 
-app.listen(port);
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/cert.pem'),
+  ca: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/chain.pem')
+}
+https.createServer(options, app).liten(port);
 
 console.log(port);
