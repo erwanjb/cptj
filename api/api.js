@@ -57,6 +57,6 @@ const options = {
   cert: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/cert.pem'),
   ca: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/chain.pem')
 }
-https.createServer(options, app).liten(port);
+https.createServer(options, app).listen(port);
 
 console.log(port);
