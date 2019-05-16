@@ -86,7 +86,7 @@
 					<section class="video"><iframe :src="t.video"></iframe></section>
 				</div>
 				<p v-if="nb[i]">
-					<label @click="showMore($event)"class="show">···/···</label>
+					<label @click="showMore($event)"class="show">en voir plus</label>
 					<input type="hidden" :value="nb[i]" class="nb">
 					<input type="hidden" :value="i" class="index">
 					<input type="hidden" :value="categorie[i]" class="cat">
@@ -447,14 +447,17 @@ $color: #ED6E13;
 	cursor: pointer;
 }
 .show{
-	color:$color;
-	border: 1px solid $color;
+	padding: 20px;
+	background-color:$color;
 	border-radius:20px;
+	color: white;
 }
 .show:hover{
 	color:white;
-	background:$color;
+	background:white;
 	cursor: pointer;
+	border: 1px solid $color;
+	color: $color;
 }
 .theme{
 	display:flex;

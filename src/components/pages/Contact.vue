@@ -12,7 +12,7 @@
     	<form action="https://formspree.io/cptjcontact@gmail.com" method="post">
 			<input type="email" id="email" name="email"placeholder="Mail"><br>
 			<input type="text" id="nom" name="nom" placeholder="Prénom ou Pseudo"><br>
-			<textarea id="text" cols="60" rows="10" name="text" placeholder="Message"></textarea><br>
+			<textarea id="text" rows="10" name="text" placeholder="Message"></textarea><br>
 			<input type="submit" value="Envoyer">
 		</form>
   	</div>
@@ -85,6 +85,8 @@ input{
 }
 textarea{
 	padding-left:5px;
+	width: 60%;
+	min-width: 350px;
 }
 form{
 	display:flex;

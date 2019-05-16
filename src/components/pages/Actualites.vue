@@ -64,7 +64,7 @@
     	</div>
     	<div id="main_actu">
     		<section v-for="t in tab" class="actualite">
-    			<h3 class="titre">{{t.titre}} :</h3>
+    			<h3 class="titre">{{t.titre}}</h3>
     			<div class="actu">
 	    			<p v-html="t.actualite"></p>
 	    			<span v-if="t.lien_source && t.lien_int"><a :href="t.lien_source">{{t.lien_int}}</a></span>
@@ -296,28 +296,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$color:#ED6E13;
 .actualite{
-	margin-left:30%;
 	display:flex;
-	margin-bottom:100px;
+	margin-bottom:50px;
+	border: 1px solid lightgrey;
+	border-radius: 20px;
 }
 .titre{
-	margin-right:50px;		
+	width: 40%;
+	border-right: 1px solid lightgrey;	
 }
 .actu{
-	margin:auto;
+	padding-left: 50px;
 	text-align:left;
 }
 @media screen and (max-width:500px){
 	.actualite{
 		display:block;
-		margin-left:0;
+		padding-left:0;
+		width: 100%;	
 	}
 	.actualite span{
 		display:block;
 	}
 	.actu{
-		margin-left:20px;
+		padding-left:20px;
+	}
+	.titre{
+		width: 100%;
 	}
 }
 </style>

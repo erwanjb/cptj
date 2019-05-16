@@ -2,7 +2,6 @@
   <div id="app">
     <nav-main></nav-main>
     <main>
-      <div id="div-ie"></div>
       <router-view></router-view>
     </main>
     <footer-main></footer-main>
@@ -45,9 +44,6 @@ $color:#ED6E13;
   src: url("./assets/LemonMilk/LemonMilklight.otf");
 }
 h1, h2 {
-  position: absolute;
-  top: 80px;
-  left: 0;
   width: 100%;
   text-align: center;
   font-weight: normal;
@@ -56,17 +52,15 @@ h1, h2 {
 }
 
 main{
-  padding-top:200px;
+  padding-top:100px;
   width: 80%;
   margin: 0 auto;
 }
-#div-ie{
-  width: 100%;
-  height: 200px;
-}
+
 p{
   font-family: Helvetica;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -88,20 +82,10 @@ li {
   padding:10px;
 }
 input,textarea{
-  border:3px solid $color;
+  border:1px solid ligthgrey;
   border-radius:10px;
 }
 footer{
   margin-top:50px;
-}
-#div-ie{
-  width: 100%;
-  height: 0px;
-}
-@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none){  
-  #div-ie{ 
-    width: 100%;
-    height: 200px;  
-  } 
 }
 </style>

@@ -1,6 +1,5 @@
 <template lang="html">
 	<footer>
-		<p>&copy; Tous droits réservés Alice Reynaud</p>
 		<div id="reseau">
 			<div class="res">
 				<a class="cont-res you2" target="_blank" href="https://www.youtube.com/channel/UC1auzQbFso05Rw4HvmXXsoQ">
@@ -45,8 +44,9 @@
 			</div>
 			<span>{{message}}</span>				
 		</div>
+		<p>&copy; Tous droits réservés Alice Reynaud</p>
 		<a href="#" id="ancre">
-			<i class="fas fa-anchor fa-2x"></i>
+			<i class="fas fa-arrow-up"></i>
 		</a>
 	</footer>
 </template>
@@ -135,15 +135,10 @@ export default{
 		justify-content:center;	
 	}
 	#reseau{
-		position: fixed;
-		margin-right: 50px;
-		top: 0;
-		right: 0;
 		display:flex;
-		flex-direction: column;
 		justify-content:center;
-		height: 100vh;
 		z-index: 4;
+		margin-bottom: 20px;
 	}
 	.cont-res{
 		width: 50px;
@@ -187,7 +182,7 @@ export default{
 	.res{
 		display:flex;
 		flex-direction: column;
-		margin-bottom: 50px;
+		margin-right: 20px;
 	}
 	#ancre{
 		width: 50px;

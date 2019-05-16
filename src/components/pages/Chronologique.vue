@@ -14,7 +14,7 @@
 	    		<section class="video"><iframe :src="t.video"></iframe></section>
 	    	</div>
 	    	<p v-if="nb">
-				<label @click="showMore($event)"class="show">···/···</label>
+				<label @click="showMore($event)"class="show">en voir plus</label>
 				<input type="hidden" :value="nb" class="nb">
 			</p>
 	    </div>
@@ -123,13 +123,16 @@ $color:#ED6E23;
 	align-items:center;
 }
 .show{
-	color:$color;
-	border: 1px solid $color;
+	padding: 20px;
+	background-color:$color;
 	border-radius:20px;
+	color: white;
 }
 .show:hover{
 	color:white;
-	background:$color;
+	background:white;
 	cursor: pointer;
+	border: 1px solid $color;
+	color: $color;
 }
 </style>
