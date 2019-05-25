@@ -1,3 +1,4 @@
+    <link rel="stylesheet" href="style.css">
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -5,7 +6,7 @@
     <meta name="viewport" content="initial-scale=1">
     <title>Cache Pas Ta Joie</title>
     <link rel="icon" href="./logoCPTJ2.png">
-    <meta name="Keywords" content="Joie,Bonheur,Positif,CachePasTaJoie">
+       <meta name="Keywords" content="Joie,Bonheur,Positif,CachePasTaJoie">
     <meta name="Description" content="Site de présentation et de suivi des actualités de Cache Pas Ta Joie">
   </head>
   <body>

@@ -53,13 +53,12 @@ const reseau = require("./reseau")(app);
 const titre = require("./titre")(app);
 
 // Redirect from http port 80 to https
-//var http = require('http');
-	
-//http.createServer(function (req, res) {
-//	console.log('toto')
-//    res.writeHead(301, { "Location": "https://cachepastajoie.fr:" + port});
-//    res.end();
-//}).listen(80)
+const http = require('http');
+http.createServer(app, function (req, res) {
+    console.log('slt')
+    res.writeHead(301, { "Location": "https://cachepastajoie.fr:" + port });
+    res.end();
+}).listen(80)
 
 const options = {
    key: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/privkey.pem'),
