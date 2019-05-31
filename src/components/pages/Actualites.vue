@@ -77,9 +77,13 @@
 <script>
 import axios from "axios";
 export default {
+	computed: {
+		tab(){
+			return this.$store.state.tabA
+		}
+	},
 	data(){
 		return{
-			tab:[],
 			actu:{
 				actu:null,
 				titre:null,
@@ -139,6 +143,7 @@ export default {
 								this.message="vous n'avez pas les droits, connectez vous";
 							}else{
 								this.message="l'actualité a été ajouté";
+								this.$store.dispatch('importActu')
 							}
 						});
 					}else{
@@ -156,7 +161,7 @@ export default {
 						method:"post",
 						url:"/actualite/supActu",
 						data:{
-							u:this.actuBis
+							u:this.actuBis.replace(/'/gi,"\\'")
 						}
 					})
 					.then(res=>{
@@ -166,6 +171,7 @@ export default {
 							this.message="vous n'avez pas les droits, connectez vous";
 						}else{
 							this.message="l'actualité a été supprimé";
+							this.$store.dispatch('importActu')
 						}
 					});
 				}else{
@@ -238,6 +244,7 @@ export default {
 					.then(res=>{
 						if(res.data=="OK"){
 							this.message="l'actualité' a été modifié";
+							this.$store.dispatch('importActu')
 						}else if(res.data=="ER"){
 							this.message="vous n'avez pas les droits, connectez vous";
 						}
@@ -272,13 +279,9 @@ export default {
 		}
 	},
 	mounted(){
-		axios({
-			method:"get",
-			url:"/actualite"
-		})
-		.then(res=>{
-			this.tab=res.data;
-		});
+		if(!this.tab.length){
+			this.$store.dispatch('importActu')
+		}
 		axios({
 			method:"post",
 			url:"/titre",

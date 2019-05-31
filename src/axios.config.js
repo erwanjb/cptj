@@ -1,9 +1,11 @@
+
 /* jshint esversion : 6 */
 import Vue from "vue";
 import axios from "axios";
 
 axios.defaults.withCredentials = true;  // permet à axios de poster des cookies, default false
-axios.defaults.baseURL = 'https://cachepastajoie.fr:443' // "https://cachepastajoie.fr/toto"
+axios.defaults.baseURL = "https://cachepastajoie.fr:443"
+
 // axios.defaults.header.get.Accepts = "application/json";
 
 // axios.interceptors.request.use(config => {

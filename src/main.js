@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import axiosConfig from "./axios.config";
+import store from './store';
 import VueRouter from "vue-router";
 import { routes } from "./routes";
 import VueSession from 'vue-session';
@@ -22,5 +23,6 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 });

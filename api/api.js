@@ -5,11 +5,13 @@ const bodyParser = require('body-parser');
 const cookieParser =require('cookie-parser');
 const https = require('https');
 const fs = require('fs');
+const history = require('connect-history-api-fallback')
 
 const app = express();
 const port = 443;
 const CryptoJS = require("crypto-js");
 
+app.use(history())
 app.set('trust proxy', 1);
 
 // permettre les appels AJAX cross-origins (CORS...)
@@ -67,6 +69,4 @@ const options = {
    ca: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/chain.pem')
 }
 
-https.createServer(options, app).listen(port);
-
-console.log(port);
+https.createServer(options, app).listen(port)
