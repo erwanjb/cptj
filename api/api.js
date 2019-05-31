@@ -7,7 +7,7 @@ const https = require('https');
 const fs = require('fs');
 
 const app = express();
-const port = 8080;
+const port = 443;
 const CryptoJS = require("crypto-js");
 
 app.set('trust proxy', 1);
@@ -52,12 +52,18 @@ const press = require("./press")(app);
 const reseau = require("./reseau")(app);
 const titre = require("./titre")(app);
 
-// const options = {
-//   key: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/privkey.pem'),
-//   cert: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/cert.pem'),
-//   ca: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/chain.pem')
-// }
-// https.createServer(options, app).listen(port);
-app.listen(port)
 
-console.log(port);
+// Redirect from http port 80 to https
+// var http = require('http');
+	
+// http.createServer(function (req, res) {
+// 	console.log('toto')
+//     res.writeHead(301, { "Location": "https://localhost:" + port});
+//     res.end();
+// }).listen(80)
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/cert.pem'),
+  ca: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/chain.pem')
+}
+https.createServer(options, app).listen(port)

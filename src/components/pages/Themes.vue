@@ -99,14 +99,24 @@
 <script>
 import axios from "axios";
 export default {
+	computed: {
+		nb(){
+			return this.$store.state.nb
+		},
+		tab(){
+			return this.$store.state.tab
+		},
+		categorie(){
+			return this.$store.state.categorie
+		},
+		categoriebis(){
+			return this.$store.state.categoriebis
+		}
+	},
 	data(){
 		return{
-			nb:[],
 			message:null,
-			tab:[],
 			tabBis:[],
-			categorie:[],
-			categoriebis:[],
 			video:{
 				video:null,
 				categorie:[],
@@ -200,6 +210,7 @@ export default {
 								this.message="vous n'avez pas d'autorisation, connectez vous";
 							}else{
 								this.message="la vidéo a été enregistré";
+								this.$store.dispatch('importTheme')
 							}
 						});
 					}else{
@@ -228,6 +239,7 @@ export default {
 								this.message="vous n'avez pas d'autorisation, connectez vous";
 							}else{
 								this.message="la vidéo a été supprimé";
+								this.$store.dispatch('importTheme')
 							}
 						});
 					}else{
@@ -255,6 +267,7 @@ export default {
 							this.message="vous n'avez pas d'autorisation, connectez vous";
 						}else{
 							this.message="la categorie a été enregistré";
+							this.$store.dispatch('importTheme')
 						}
 					});
 				}else{
@@ -279,6 +292,7 @@ export default {
 							this.message="vous n'avez pas d'autorisation, connectez vous";
 						}else{
 							this.message="la categorie a été supprimé";
+							this.$store.dispatch('importTheme')
 						}
 					});
 				}else{
@@ -332,6 +346,7 @@ export default {
 					.then(res=>{
 						if (res.data=="OK") {
 							this.message="les éléments de la vidéo ont été changé";
+							this.$store.dispatch('importTheme')
 						}else if(res.data=="ER"){
 							this.message="vous n'avez pas d'autorisation, connectez vous";
 						}
@@ -370,32 +385,9 @@ export default {
 		},
 	},
 	mounted(){
-		axios({
-			method :"get",
-			url :"/themes"
-		})
-		.then(res =>{
-			this.categorie =res.data.categorie;
-			this.tab = res.data.tab;
-			this.nb = res.data.nb;
-			for(let i= 0;i<this.categorie.length;i++){
-				let stock ="";
-				for(let j=0;j<this.categorie[i].length;j++){
-					if(this.categorie[i][j]=="_"||this.categorie[i][j]=="\\"){
-						if(this.categorie[i][j]=="_"){
-							stock+=" ";
-						}
-						if(this.categorie[i][j]=="\\"){
-							stock+="";
-						}
-
-					}else{
-						stock+=this.categorie[i][j];
-					}
-				}
-				this.categoriebis[i]=stock;
-			}
-		});
+		if(!this.categorie.length || !this.tab.length) {
+			this.$store.dispatch('importTheme')
+		} 
 		axios({
 			method:"post",
 			url:"/titre",

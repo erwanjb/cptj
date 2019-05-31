@@ -23,9 +23,13 @@
 <script>
 import axios from "axios";
 export default {
+	computed: {
+		apropos(){
+			return this.$store.state.apropos
+		}
+	},
 	data(){
 		return{
-			apropos:null,
 			aproposBis:null,
 			message:null,
 			titre:null,
@@ -34,13 +38,6 @@ export default {
 		}
 	},
 	mounted(){
-		axios({
-			method:"get",
-			url:"/apropos"
-		})
-		.then(res=>{
-			this.apropos=res.data;
-		});
 		axios({
 			method:"post",
 			url:"/titre",
@@ -72,6 +69,7 @@ export default {
 					.then(res=>{
 						if (res.data=="OK") {
 							this.message="le à propos a été changé";
+							this.$store.dispatch('importApropos')
 						}else if(res.data=="ER"){
 							this.message="veuillez vous connecter, vous n'avez pas d'autorisation";
 						}
