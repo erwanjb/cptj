@@ -7,7 +7,7 @@ const https = require('https');
 const fs = require('fs');
 
 const app = express();
-const port = 8080;
+const port = 443;
 const CryptoJS = require("crypto-js");
 
 app.set('trust proxy', 1);
