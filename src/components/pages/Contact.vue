@@ -53,26 +53,30 @@ export default {
 				.then(res=>{
 					if(res.data=="OK"){
 						this.message="le titre a été modifié";
+						this.getTitre()
 					}else if(res.data=="ER"){
 						this.message="vous n''avez pas les droits, connectez vous";
 					}
 				});
 			}
 		},
+		getTitre(){
+			axios({
+				method:"post",
+				url:"/titre",
+				data:{
+					u:{
+						page:"contact"
+					}
+				}
+			})
+			.then(res=>{
+				this.titre=res.data;
+			});
+		}
 	},
 	mounted(){
-		axios({
-			method:"post",
-			url:"/titre",
-			data:{
-				u:{
-					page:"contact"
-				}
-			}
-		})
-		.then(res=>{
-			this.titre=res.data;
-		});
+		this.getTitre()
 	},
 }
 </script>

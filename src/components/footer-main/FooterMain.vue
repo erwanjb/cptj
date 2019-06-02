@@ -69,25 +69,28 @@ export default{
 		}
 	},
 	mounted(){
-		axios({
-			method:"get",
-			url:"/reseau"
-		})
-		.then(res=>{
-			for(let i = 0; i < res.data.length; i++){
-				if(res.data[i].reseau == "you"){
-					this.res.you =res.data[i].follow;
-				}
-				if(res.data[i].reseau == "fac"){
-					this.res.fac =res.data[i].follow;
-				}
-				if(res.data[i].reseau == "ins"){
-					this.res.ins =res.data[i].follow;
-				}
-			}
-		});
+		this.getRes()
 	},
 	methods:{
+		getRes(){
+			axios({
+				method:"get",
+				url:"/reseau"
+			})
+			.then(res=>{
+				for(let i = 0; i < res.data.length; i++){
+					if(res.data[i].reseau == "you"){
+						this.res.you =res.data[i].follow;
+					}
+					if(res.data[i].reseau == "fac"){
+						this.res.fac =res.data[i].follow;
+					}
+					if(res.data[i].reseau == "ins"){
+						this.res.ins =res.data[i].follow;
+					}
+				}
+			});
+		},
 		show(e){
 			if(this.$session.exists()){
 				const form = e.target.parentNode.querySelector("form");
@@ -114,6 +117,7 @@ export default{
 					.then(res=>{
 						if(res.data=="OK"){
 							this.message="le nombre de follow du réseau a été modifié";
+							this.getRes()
 						}else if(res.data=="ER"){
 							this.message="vous n'avez pas les droits, connectez vous";
 						}

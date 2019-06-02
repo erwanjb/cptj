@@ -5,6 +5,7 @@
 			<input type="password" v-model="user.password">
 			<button @click="connection()">click</button>
 		</form>
+		<button v-if="$session.exists()" @click="deco">déconnexion</button>
 		<div>
 			<div id="message">{{message}}</div>
 		</div>
@@ -35,12 +36,24 @@ export default{
 		    .then(res => {
 		    	if('token' in res.data){
 		    		this.$session.start();
+		    		window.location.reload()
 		    		//this.$session.set('jwt', res.data.token);
 		    		this.message="vous êtes connecté";
 		    	}else{
 		    		this.message="vous n'avez pas les droits";
 		    	}
 		    });
+	  	},
+	  	deco(){
+	  		axios({
+	  			method: 'post',
+	  			url: '/deco'
+	  		})
+	  		.then(res =>{
+	  			this.$session.destroy()
+	  			this.message="vous n'êtes plus connecté";
+	  			window.location.reload()
+	  		})
 	  	}
 	  }
 }

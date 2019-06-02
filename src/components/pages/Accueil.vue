@@ -38,20 +38,26 @@ export default {
 		}
 	},
 	mounted(){
-		axios({
-			method:"post",
-			url:"/titre",
-			data:{
-				u:{
-					page:"apropos"
-				}
-			}
-		})
-		.then(res=>{
-			this.titre=res.data;
-		});
+		if(!this.apropos){
+			this.$store.dispatch('importApropos')
+		}
+		this.getTitre()
 	},
 	methods:{
+		getTitre(){
+			axios({
+				method:"post",
+				url:"/titre",
+				data:{
+					u:{
+						page:"apropos"
+					}
+				}
+			})
+			.then(res=>{
+				this.titre=res.data;
+			});
+		},
 		nl2br (str, is_xhtml) {   
     		var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';    
     		return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
@@ -97,6 +103,8 @@ export default {
 				.then(res=>{
 					if(res.data=="OK"){
 						this.message="le titre a été modifié";
+						this.getTitre()
+
 					}else if(res.data=="ER"){
 						this.message="vous n''avez pas les droits, connectez vous";
 					}

@@ -32,6 +32,10 @@ module.exports = (app) => {
                 res.send("not found");
             }
         });
+        ap.post('/deco', (req, res)=>{
+            req.session.destroy()
+            res.send('OK')
+        })
 	};
 	return portailAPI(app);
 };

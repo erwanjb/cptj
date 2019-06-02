@@ -377,29 +377,33 @@ export default {
 				.then(res=>{
 					if(res.data=="OK"){
 						this.message="le titre a été modifié";
+						this.getTitre()
 					}else if(res.data=="ER"){
 						this.message="vous n''avez pas les droits, connectez vous";
 					}
 				});
 			}
 		},
+		getTitre(){
+			axios({
+				method:"post",
+				url:"/titre",
+				data:{
+					u:{
+						page:"themes"
+					}
+				}
+			})
+			.then(res=>{
+				this.titre=res.data;
+			});
+		}
 	},
 	mounted(){
 		if(!this.categorie.length || !this.tab.length) {
 			this.$store.dispatch('importTheme')
 		} 
-		axios({
-			method:"post",
-			url:"/titre",
-			data:{
-				u:{
-					page:"themes"
-				}
-			}
-		})
-		.then(res=>{
-			this.titre=res.data;
-		});
+		this.getTitre()
 		if(this.$session.exists()){
 			axios({
 				method :"get",

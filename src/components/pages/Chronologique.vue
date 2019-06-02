@@ -35,6 +35,7 @@ export default {
 		}
 	},
 	mounted(){
+		this.getTitre()
 		axios({
 			method :"get",
 			url :"/chrono"
@@ -45,20 +46,22 @@ export default {
 				this.nb = res.data.nb;
 			}
 		});
-		axios({
-			method:"post",
-			url:"/titre",
-			data:{
-				u:{
-					page:"chronologique"
-				}
-			}
-		})
-		.then(res=>{
-			this.titre=res.data;
-		});
 	},
 	methods:{
+		getTitre(){
+			axios({
+				method:"post",
+				url:"/titre",
+				data:{
+					u:{
+						page:"chronologique"
+					}
+				}
+			})
+			.then(res=>{
+				this.titre=res.data;
+			});
+		},
 		showMore(e){
 			const nb =e.target.parentNode.querySelector(".nb").value;
 			axios({
@@ -101,6 +104,7 @@ export default {
 				.then(res=>{
 					if(res.data=="OK"){
 						this.message="le titre a été modifié";
+						this.getTitre()
 					}else if(res.data=="ER"){
 						this.message="vous n''avez pas les droits, connectez vous";
 					}
