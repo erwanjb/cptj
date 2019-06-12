@@ -1,5 +1,5 @@
 module.exports = (app) => {
-
+  const mysql = require('mysql')
 	const connection = require('./connection');
 
   	const actuAPI =(ap)=>{
@@ -19,14 +19,14 @@ module.exports = (app) => {
           const titre = req.body.u.titre;
           const lienSource = req.body.u.lienSource;
           const lienInt = req.body.u.lienInt;
-          const q = "SELECT * FROM actualites WHERE titre='"+titre+"'";
+          const q = "SELECT * FROM actualites WHERE titre="+mysql.escape(titre);
           connection.query(q,(e,r,f)=>{
            if(e) throw e;
             else{
               if (r.length==1){
                 res.send("NO");
               }else{
-                const q2= "INSERT INTO actualites (actualite, titre, date, lien_source, lien_int) VALUES ('"+actu+"', '"+titre+"', '"+date+"', "+((lienSource) ? "'" + lienSource + "'" : "NULL")+", "+((lienInt) ? "'" + lienInt + "'" : "NULL") +")";
+                const q2= "INSERT INTO actualites (actualite, titre, date, lien_source, lien_int) VALUES ("+mysql.escape(actu)+", "+mysql.escape(titre)+", "+mysql.escape(date)+", "+((lienSource) ? mysql.escape(lienSource) : "NULL")+", "+((lienInt) ? mysql.escape(lienInt) : "NULL") +")";
                 connection.query(q2,(e2,r2,f2)=>{
                   if(e2) throw e2;
                   else{
@@ -43,14 +43,14 @@ module.exports = (app) => {
       ap.post("/actualite/supActu",(req,res)=>{
         if(req.session && req.session.adminConnected){
           const titre = req.body.u;
-          const q = "SELECT * FROM actualites WHERE titre='"+titre+"'";
+          const q = "SELECT * FROM actualites WHERE titre="+mysql.escape(titre);
           connection.query(q,(e,r,f)=>{
             if(e) throw e;
             else{
               if (r.length==0){
                 res.send("NO");
               }else{
-                const q2= "DELETE FROM actualites WHERE titre='"+titre+"'";
+                const q2= "DELETE FROM actualites WHERE titre="+mysql.escape(titre);
                 connection.query(q2,(e2,r2,f2)=>{
                   if(e2) throw e2;
                   else{
@@ -68,7 +68,7 @@ module.exports = (app) => {
         let status = {};
         if(req.session && req.session.adminConnected){
           const titre = req.body.u;
-          const q = "SELECT * FROM actualites WHERE titre='"+titre+"'";
+          const q = "SELECT * FROM actualites WHERE titre="+mysql.escape(titre);
           connection.query(q,(e,r,f)=>{
             if(e) throw e;
             else{
@@ -99,22 +99,22 @@ module.exports = (app) => {
           console.log(actu);
           let q = "";
           if(actu.date){
-            q += "UPDATE actualites SET date='"+actu.date+"' WHERE titre='"+titre+"' ";
+            q += "UPDATE actualites SET date="+mysql.escape(actu.date)+" WHERE titre="+mysql.escape(titre);
           }
           if(actu.actu){
-            const sql = "UPDATE actualites SET actualite='"+actu.actu+"' WHERE titre='"+titre+"' ";
+            const sql = "UPDATE actualites SET actualite="+mysql.escape(actu.actu)+" WHERE titre="+mysql.escape(titre);
             q += (q) ? "\; " + sql : sql;
           }
           if(actu.lienSource){
-            const sql = "UPDATE actualites SET lien_source='"+actu.lienSource+"' WHERE titre='"+titre+"' ";
+            const sql = "UPDATE actualites SET lien_source="+mysql.escape(actu.lienSource)+" WHERE titre="+mysql.escape(titre);
             q += (q) ? "\; " + sql : sql;
           }
           if(actu.lienInt){
-            const sql = "UPDATE actualites SET lien_int='"+actu.lienInt+"' WHERE titre='"+titre+"' ";
+            const sql = "UPDATE actualites SET lien_int="+mysql.escape(actu.lienInt)+" WHERE titre="+mysql.escape(titre);
             q += (q) ? "\; " + sql : sql;
           }
           if(titre){
-            const sql = "UPDATE actualites SET titre='"+actu.titre+"' WHERE titre='"+titre+"' ";
+            const sql = "UPDATE actualites SET titre="+mysql.escape(actu.titre)+" WHERE titre="+mysql.escape(titre);
             q += (q) ? "\; " + sql : sql;
           }
           connection.query(q,(e,r,f)=>{

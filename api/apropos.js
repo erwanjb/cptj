@@ -1,7 +1,7 @@
 module.exports = (app) => {
 
 const connection = require('./connection');
-
+const mysql = require('mysql')
   	const aproposAPI =(ap)=>{
   		ap.get("/apropos",(req,res)=>{
   			const q = "SELECT apropos FROM apropos";
@@ -19,7 +19,7 @@ const connection = require('./connection');
     			connection.query(q,(e,r,f)=>{
     				if (e) throw e;
     				else{
-    					const q2 = "INSERT INTO apropos (apropos) VALUE ('"+apropos+"')";
+    					const q2 = "INSERT INTO apropos (apropos) VALUE ("+mysql.escape(apropos)+")";
     					connection.query(q2, (e2,r2,f2)=>{
     						if (e2) throw e2;
     						else{

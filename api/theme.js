@@ -1,7 +1,7 @@
 module.exports = (app) => {
 
 	const connection = require('./connection');
-
+    const mysql = require('mysql')
 	const themesAPI = (ap) =>{
         ap.get("/themes", (req,res)=>{
             const q = "SELECT type FROM categorie";
@@ -18,12 +18,12 @@ module.exports = (app) => {
                     }
                     sections.categorie=categorie;
                     for(let i = 0;i<categorie.length;i++){
-                        let q2 = "SELECT * FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type='"+categorie[i]+"' ORDER BY date DESC LIMIT 0, "+nb;
+                        let q2 = "SELECT * FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type="+mysql.escape(categorie[i])+" ORDER BY date DESC LIMIT 0, "+nb;
                         connection.query(q2,(e,r,f)=>{
                             if(e) throw e;
                             else{
                                 tab.push(r);
-                                let q3 ="SELECT * FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE categorie.type='"+categorie[i]+"' ORDER BY date DESC LIMIT "+nb+", 1";
+                                let q3 ="SELECT * FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE categorie.type="+mysql.escape(categorie[i])+" ORDER BY date DESC LIMIT "+nb+", 1";
                                 connection.query(q3,(e2,r2,f2)=>{
                                     if(e2) throw e2;
                                     else{
@@ -71,7 +71,7 @@ module.exports = (app) => {
                     }
                 }
                 const video = req.body.u.video.substring(i+5,j);
-                const q = "SELECT video FROM video WHERE video='"+video+"'";
+                const q = "SELECT video FROM video WHERE video="+mysql.escape(video);
                 connection.query(q,(error,results,fields)=>{
                     if(error) throw error;
                     else{    
@@ -79,13 +79,13 @@ module.exports = (app) => {
                             status.status="NO";
                             res.send(status);
                         }else{
-                            const q2="INSERT INTO video (video, titre, date) VALUES ('"+video+"', '"+req.body.u.titre+"', '"+req.body.u.date+"')";
+                            const q2="INSERT INTO video (video, titre, date) VALUES ("+mysql.escape(video)+", "+mysql.escape(req.body.u.titre)+", "+mysql.escape(req.body.u.date)+")";
                             connection.query(q2, (e,r,f)=>{
                                 if (e) throw e;
                                 else{
                                     let q3= '';
                                     for (let i=0;i<req.body.u.categorie.length;i++){
-                                        const sql="INSERT INTO join_vid_cat (id_video, id_categorie) SELECT video.id, categorie.id FROM video JOIN categorie WHERE video.video='"+video+"' AND categorie.type='"+req.body.u.categorie[i]+"'";
+                                        const sql="INSERT INTO join_vid_cat (id_video, id_categorie) SELECT video.id, categorie.id FROM video JOIN categorie WHERE video.video="+mysql.escape(video)+" AND categorie.type="+mysql.escape(req.body.u.categorie[i]);
                                         q3 += q3 ? ' \; ' + sql : sql;
                                     }
                                     connection.query(q3,(e2,r2,f2)=>{
@@ -121,7 +121,7 @@ module.exports = (app) => {
                     }
                 }
                 const video = req.body.u.substring(i+5,j);
-                const q = "SELECT * FROM video WHERE video='"+video+"'";
+                const q = "SELECT * FROM video WHERE video="+mysql.escape(video);
                 connection.query(q,(e,r,f)=>{
                     if(e) throw e;
                     else{
@@ -129,11 +129,11 @@ module.exports = (app) => {
                             status.status="NO";
                             res.send(status);
                         }else{
-                            const q2 ="DELETE FROM join_vid_cat WHERE id_video=(SELECT id FROM video WHERE video='"+video+"')";
+                            const q2 ="DELETE FROM join_vid_cat WHERE id_video=(SELECT id FROM video WHERE video="+mysql.escape(video)+")";
                             connection.query(q2,(e2,r2,f2)=>{
                                 if (e2) throw e2;
                                 else{
-                                    const q3="DELETE FROM video WHERE video='"+video+"'";
+                                    const q3="DELETE FROM video WHERE video="+mysql.escape(video);
                                     connection.query(q3,(e3,r3,f3)=>{
                                         if(e3) throw e3;
                                         else{
@@ -162,7 +162,7 @@ module.exports = (app) => {
                     }else{
                         cat+=catBis[j];                    }
                 }
-                const q="SELECT * FROM categorie WHERE type='"+cat+"'";
+                const q="SELECT * FROM categorie WHERE type="+mysql.escape(cat);
                 connection.query(q,(e,r,f)=>{
                     if (e) throw e;
                     else{
@@ -170,7 +170,7 @@ module.exports = (app) => {
                             status.status="NO";
                             res.send(status);
                         }else{
-                            const q2="INSERT INTO categorie (type) VALUE ('"+cat+"')";
+                            const q2="INSERT INTO categorie (type) VALUE ("+mysql.escape(cat)+")";
                             connection.query(q2, (e2,r2,f2)=>{
                                 if (e2) throw e2;
                                 else{
@@ -197,7 +197,7 @@ module.exports = (app) => {
                     }else{
                         cat+=catBis[j];                    }
                 }
-                const q="SELECT * FROM categorie WHERE type='"+cat+"'";
+                const q="SELECT * FROM categorie WHERE type="+mysql.escape(cat);
                 connection.query(q,(e,r,f)=>{
                     if (e) throw e;
                     else{
@@ -205,11 +205,11 @@ module.exports = (app) => {
                             status.status="NO";
                             res.send(status);
                         }else{
-                            const q2="DELETE FROM join_vid_cat WHERE id_categorie=(SELECT id FROM categorie WHERE type='"+cat+"')";
+                            const q2="DELETE FROM join_vid_cat WHERE id_categorie=(SELECT id FROM categorie WHERE type="+mysql.escape(cat)+")";
                             connection.query(q2,(e2,r2,f2)=>{
                                 if (e2) throw e2;
                                 else{
-                                    const q3="DELETE FROM categorie WHERE type='"+cat+"'";
+                                    const q3="DELETE FROM categorie WHERE type="+mysql.escape(cat);
                                     connection.query(q3, (e3,r3,f3)=>{
                                         if (e3) throw e3;
                                         else{
@@ -230,13 +230,13 @@ module.exports = (app) => {
         ap.post("/themes/addMore",(req,res)=>{
             const categorie = req.body.u.cat;
             const nb = req.body.u.nb;
-            const q = "SELECT video.video, video.titre FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type='"+categorie+"' ORDER BY date DESC LIMIT "+nb+", 5";
+            const q = "SELECT video.video, video.titre FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type="+mysql.escape(categorie)+" ORDER BY date DESC LIMIT "+nb+", 5";
             connection.query(q,(e,r,f)=>{
                 if(e) throw e;
                 else{
                     let sections={};
                     sections.tab=r;
-                    const q2="SELECT video.video, video.titre FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type='"+categorie+"' ORDER BY date DESC LIMIT "+(parseInt(nb)+5)+", 1";
+                    const q2="SELECT video.video, video.titre FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type="+mysql.escape(categorie)+" ORDER BY date DESC LIMIT "+(parseInt(nb)+5)+", 1";
                     connection.query(q2,(e2,r2,f2)=>{
                         if(e2) throw e2;
                         else{
@@ -265,7 +265,7 @@ module.exports = (app) => {
                     }
                 }
                 const video = req.body.u.substring(i+5,j);
-                const q = "SELECT * FROM video WHERE video='"+video+"'";
+                const q = "SELECT * FROM video WHERE video="+mysql.escape(video);
                 connection.query(q,(e,r,f)=>{
                     if(e) throw e;
                     else{
@@ -278,7 +278,7 @@ module.exports = (app) => {
                                 date: r[0].date,
                                 titre: r[0].titre
                             }
-                            const q2 = "SELECT type FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE video='"+video+"'"
+                            const q2 = "SELECT type FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE video="+mysql.escape(video)
                             connection.query(q2,(e2,r2,f2)=>{
                                 if (e2) throw e2;
                                 else{
@@ -319,19 +319,19 @@ module.exports = (app) => {
                 const date = req.body.u.date;
                 let q ="";
                 if(date){
-                    q += "UPDATE video SET date='"+date+"' WHERE video='"+video+"' ";
+                    q += "UPDATE video SET date="+mysql.escape(date)+" WHERE video="+mysql.escape(video);
                 }
                 const titre = req.body.u.titre;
                 if(titre){
-                    const sql = "UPDATE video SET titre='"+titre+"' WHERE video='"+video+"' ";
+                    const sql = "UPDATE video SET titre="+mysql.escape(titre)+" WHERE video="+mysql.escape(video);
                     q += (q) ? "\; " + sql : sql;
                 }
                 const categorie = req.body.u.categorie;
                 if(categorie.length){
-                    const sql = "DELETE FROM join_vid_cat WHERE id_video=(SELECT id FROM video WHERE video='"+video+"') ";
+                    const sql = "DELETE FROM join_vid_cat WHERE id_video=(SELECT id FROM video WHERE video="+mysql.escape(video)+") ";
                     q += (q) ? "\; " + sql : sql;
                     for (let k = 0; k < categorie.length; k++){
-                        q += "\; INSERT INTO join_vid_cat (id_video, id_categorie) SELECT video.id, categorie.id FROM video JOIN categorie WHERE video.video='"+video+"' AND categorie.type='"+categorie[k]+"' ";
+                        q += "\; INSERT INTO join_vid_cat (id_video, id_categorie) SELECT video.id, categorie.id FROM video JOIN categorie WHERE video.video="+mysql.escape(video)+" AND categorie.type="+mysql.escape(categorie[k]);
                     } 
                 }
                 console.log(q)

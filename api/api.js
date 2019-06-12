@@ -17,7 +17,7 @@ app.set('trust proxy', 1);
 // permettre les appels AJAX cross-origins (CORS...)
 app.use(cors({
   credentials: true,
-  origin: [/*'https://cachepastajoie.fr','https://www.cachepastajoie.fr','http://localhost:8081', 'http://localhost'*/]
+  origin: [/*'https://cachepastajoie.fr','https://www.cachepastajoie.fr','http://localhost:8080', 'http://localhost'*/]
 }));
 
 app.use(bodyParser.json());

@@ -1,7 +1,7 @@
 module.exports = (app) => {
 
 	const CryptoJS = require("crypto-js");
-
+    const mysql = require('mysql')
   	const connection = require('./connection');
 
 	const portailAPI = (ap) =>{
@@ -9,7 +9,7 @@ module.exports = (app) => {
             var password = 'teyfdsiu';
             var encrypted = CryptoJS.AES.encrypt(req.body.u.password, password).toString();
             var decrypted  = CryptoJS.AES.decrypt(encrypted, password).toString(CryptoJS.enc.Utf8);
-            const r = "SELECT * FROM connexion WHERE identifiant='"+req.body.u.identifiant+"'";
+            const r = "SELECT * FROM connexion WHERE identifiant="+mysql.escape(req.body.u.identifiant);
 			connection.query(r, (error, results, fields) => {
         		if (error) throw error;
         		else{

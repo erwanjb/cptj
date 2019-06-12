@@ -1,7 +1,7 @@
 module.exports = (app) => {
 
   const connection = require('./connection');
-
+  const mysql = require('mysql')
   const reseauAPI = (ap)=>{
     ap.get("/reseau", (req,res)=>{
       const q = "SELECT * FROM reseau";
@@ -17,7 +17,7 @@ module.exports = (app) => {
       if(req.session && req.session.adminConnected){
         const reseau = req.body.u.res;
         const follow = req.body.u.follow;
-        const q = "UPDATE reseau SET follow='"+follow+"' WHERE reseau='"+reseau+"'";
+        const q = "UPDATE reseau SET follow="+mysql.escape(follow)+" WHERE reseau="+mysql.escape(reseau);
         connection.query(q,(e,r,f)=>{
           if(e) throw e;
           else{
