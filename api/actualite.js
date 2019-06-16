@@ -96,34 +96,71 @@ module.exports = (app) => {
         if(req.session && req.session.adminConnected){
           const titre =req.body.u.oldTitre;
           const actu = req.body.u;
-          console.log(actu);
-          let q = "";
-          if(actu.date){
-            q += "UPDATE actualites SET date="+mysql.escape(actu.date)+" WHERE titre="+mysql.escape(titre);
-          }
-          if(actu.actu){
-            const sql = "UPDATE actualites SET actualite="+mysql.escape(actu.actu)+" WHERE titre="+mysql.escape(titre);
-            q += (q) ? "\; " + sql : sql;
-          }
-          if(actu.lienSource){
-            const sql = "UPDATE actualites SET lien_source="+mysql.escape(actu.lienSource)+" WHERE titre="+mysql.escape(titre);
-            q += (q) ? "\; " + sql : sql;
-          }
-          if(actu.lienInt){
-            const sql = "UPDATE actualites SET lien_int="+mysql.escape(actu.lienInt)+" WHERE titre="+mysql.escape(titre);
-            q += (q) ? "\; " + sql : sql;
-          }
-          if(titre){
-            const sql = "UPDATE actualites SET titre="+mysql.escape(actu.newTitre)+" WHERE titre="+mysql.escape(titre);
-            q += (q) ? "\; " + sql : sql;
-          }
-          console.log(q)
-          connection.query(q,(e,r,f)=>{
-            if(e) throw e;
-            else{
-              res.send("OK");
+          if(actu.newTitre){
+            const sql = 'SELECT titre FROM actualites WHERE titre='+mysql.escape(actu.newTitre)
+            connection.query(sql, (error, result, field)=>{
+              if(error) throw error;
+              else{
+                if(result.length){
+                  res.send('NO')
+                } else {
+                  let q = "";
+                  if(actu.date){
+                    q += "UPDATE actualites SET date="+mysql.escape(actu.date)+" WHERE titre="+mysql.escape(titre);
+                  }
+                  if(actu.actu){
+                    const sql = "UPDATE actualites SET actualite="+mysql.escape(actu.actu)+" WHERE titre="+mysql.escape(titre);
+                    q += (q) ? "\; " + sql : sql;
+                  }
+                  if(actu.lienSource){
+                    const sql = "UPDATE actualites SET lien_source="+mysql.escape(actu.lienSource)+" WHERE titre="+mysql.escape(titre);
+                    q += (q) ? "\; " + sql : sql;
+                  }
+                  if(actu.lienInt){
+                    const sql = "UPDATE actualites SET lien_int="+mysql.escape(actu.lienInt)+" WHERE titre="+mysql.escape(titre);
+                    q += (q) ? "\; " + sql : sql;
+                  }
+                  if(actu.newTitre){
+                    const sql = "UPDATE actualites SET titre="+mysql.escape(actu.newTitre)+" WHERE titre="+mysql.escape(titre);
+                    q += (q) ? "\; " + sql : sql;
+                  }
+                  connection.query(q,(e,r,f)=>{
+                    if(e) throw e;
+                    else{
+                      res.send("OK");
+                    }
+                  });
+                }
+              }
+            })
+          } else {
+            let q = "";
+            if(actu.date){
+              q += "UPDATE actualites SET date="+mysql.escape(actu.date)+" WHERE titre="+mysql.escape(titre);
             }
-          });
+            if(actu.actu){
+              const sql = "UPDATE actualites SET actualite="+mysql.escape(actu.actu)+" WHERE titre="+mysql.escape(titre);
+              q += (q) ? "\; " + sql : sql;
+            }
+            if(actu.lienSource){
+              const sql = "UPDATE actualites SET lien_source="+mysql.escape(actu.lienSource)+" WHERE titre="+mysql.escape(titre);
+              q += (q) ? "\; " + sql : sql;
+            }
+            if(actu.lienInt){
+              const sql = "UPDATE actualites SET lien_int="+mysql.escape(actu.lienInt)+" WHERE titre="+mysql.escape(titre);
+              q += (q) ? "\; " + sql : sql;
+            }
+            if(actu.newTitre){
+              const sql = "UPDATE actualites SET titre="+mysql.escape(actu.newTitre)+" WHERE titre="+mysql.escape(titre);
+              q += (q) ? "\; " + sql : sql;
+            }
+            connection.query(q,(e,r,f)=>{
+              if(e) throw e;
+              else{
+                res.send("OK");
+              }
+            });
+          }
         }else{
           res.send("ER");
         }

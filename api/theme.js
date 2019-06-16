@@ -111,12 +111,12 @@ module.exports = (app) => {
                 let i = 0;
                 let j;
                 for(i;i<req.body.u.video.length-4;i++){
-                    if(req.body.u.substring(i,i+5)=="src=\""){
+                    if(req.body.u.video.substring(i,i+5)=="src=\""){
                         break;
                     }
                 }
                 for(j=i+5;j<req.body.u.video.length;j++){
-                    if(req.body.u.substring(j,j+1)=="\""){
+                    if(req.body.u.video.substring(j,j+1)=="\""){
                         break;
                     }
                 }
@@ -255,12 +255,12 @@ module.exports = (app) => {
                 let i = 0;
                 let j;
                 for(i;i<req.body.u.video.length-4;i++){
-                    if(req.body.u.substring(i,i+5)=="src=\""){
+                    if(req.body.u.video.substring(i,i+5)=="src=\""){
                         break;
                     }
                 }
                 for(j=i+5;j<req.body.u.video.length;j++){
-                    if(req.body.u.substring(j,j+1)=="\""){
+                    if(req.body.u.video.substring(j,j+1)=="\""){
                         break;
                     }
                 }
@@ -269,7 +269,6 @@ module.exports = (app) => {
                 connection.query(q,(e,r,f)=>{
                     if(e) throw e;
                     else{
-                        console.log(r);
                         if (r.length==0) {
                             status.status="NO";
                             res.send(status);
@@ -290,7 +289,6 @@ module.exports = (app) => {
                                     status.status="OK";
                                     status.video=videoBis;
                                     res.send(status);
-                                    console.log(cat, r2)
                                 }
                             });
                         }
@@ -334,7 +332,6 @@ module.exports = (app) => {
                         q += "\; INSERT INTO join_vid_cat (id_video, id_categorie) SELECT video.id, categorie.id FROM video JOIN categorie WHERE video.video="+mysql.escape(video)+" AND categorie.type="+mysql.escape(categorie[k]);
                     } 
                 }
-                console.log(q)
                 connection.query(q,(e,r,f)=>{
                     if(e) throw e;
                     else{

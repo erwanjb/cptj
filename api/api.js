@@ -30,13 +30,24 @@ app.use(session({
 }));
 app.use('/', express.static(__dirname + '/../dist'))
 app.use((req, res, next) =>{
-	for(const input in req.body.u){
-		req.body.u[input] = xss(req.body.u[input], {
-			whiteList: {
-				br: []
-			},
-			stripIgnoreTag: true
-		})
+	if(req.url.match(new RegExp('/themes/'))){
+		for(const input in req.body.u){
+			req.body.u[input] = xss(req.body.u[input], {
+				whiteList: {
+					iframe: ['src']
+				},
+				stripIgnoreTag: true
+			})
+		}
+	} else {
+		for(const input in req.body.u){
+			req.body.u[input] = xss(req.body.u[input], {
+				whiteList: {
+					br: []
+				},
+				stripIgnoreTag: true
+			})
+		}
 	}
 	next()
 })

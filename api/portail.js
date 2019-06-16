@@ -7,7 +7,6 @@ module.exports = (app) => {
 	const portailAPI = (ap) =>{
 		ap.post("/portail", (req,res)=>{
             var encrypted = CryptoJS.SHA256(req.body.u.password).toString();
-            console.log(encrypted)
             const r = "SELECT * FROM connexion WHERE identifiant="+mysql.escape(req.body.u.identifiant);
 			connection.query(r, (error, results, fields) => {
         		if (error) throw error;

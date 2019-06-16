@@ -219,39 +219,54 @@ export default {
 				if(this.actuBisBisBis.titre==null && this.actuBisBisBis.actu==null && this.actuBisBisBis.date==null && this.actuBisBisBis.lienInt==null && this.actuBisBisBis.lienSource==null){
 					this.message="veuillez renseigner au moins un champ à modifier"
 				}else{
-					if(this.actuBisBis.lienSource==null && this.actuBisBis.lienInt==null && (this.actuBisBisBis.lienSource!=null || this.actuBisBisBis.lienInt!=null)){
-						if(this.actuBisBisBis.lienSource == null || this.actuBisBisBis.lienInt == null){
-							this.message="veuiller rentrer un intitulé et un source pour le lien";
-							return;
-						}
-					}
-					if(this.actuBisBisBis.lienSource!= null && this.actuBisBisBis.lienSource.substring(0,4)!=="http"){
-						this.message=="veuillez mettre un lien http(s) pour la source";
-						return;
-					}
-					axios({
-						method:"post",
-						url:"/actu/modifActuBis",
-						data:{
-							u:{
-								actu:(this.actuBisBisBis.actu) ? this.nl2br(this.actuBisBisBis.actu).replace(/'/gi,"\\'") : null,
-								newTitre:(this.actuBisBisBis.titre) ? this.actuBisBisBis.titre.replace(/'/gi,"\\'") : null,
-								date:this.actuBisBisBis.date,
-								lienSource:this.actuBisBisBis.lienSource,
-								lienInt:(this.actuBisBisBis.lienInt) ? this.actuBisBisBis.lienInt.replace(/'/gi,"\\'") : null,
-								oldTitre: this.actuBisBis.titre
+					if(((this.choix[0] && this.actuBisBisBis.titre) || (!this.choix[0] && !this.actuBisBisBis.titre)) && ((this.choix[1] && this.actuBisBisBis.actu) || (!this.choix[1] && !this.actuBisBisBis.actu)) && ((this.choix[2] && this.actuBisBisBis.date) || (!this.choix[2] && !this.actuBisBisBis.date)) && ((this.choix[3] && this.actuBisBisBis.lienSource && this.actuBisBis.lienInt) || (!this.choix[3] && !this.actuBisBisBis.lienSource && !this.actuBisBis.lienInt))){
+						if(this.choix[3] && (this.actuBisBisBis.lienSource!=null || this.actuBisBisBis.lienInt!=null)){
+							if(this.actuBisBisBis.lienSource == null || this.actuBisBisBis.lienInt == null){
+								this.message="veuiller rentrer un intitulé et un source pour le lien";
+								return;
 							}
 						}
-					})
-					.then(res=>{
-						if(res.data=="OK"){
-							this.message="l'actualité' a été modifié";
-							this.$store.dispatch('importActu')
-						}else if(res.data=="ER"){
-							this.message="vous n'avez pas les droits, connectez vous";
+						if(this.actuBisBisBis.lienSource!= null && this.actuBisBisBis.lienSource.substring(0,4)!=="http"){
+							this.message=="veuillez mettre un lien http(s) pour la source";
+							return;
 						}
-						this.bool=false;
-					});
+						axios({
+							method:"post",
+							url:"/actu/modifActuBis",
+							data:{
+								u:{
+									actu:(this.actuBisBisBis.actu) ? this.nl2br(this.actuBisBisBis.actu).replace(/'/gi,"\\'") : null,
+									newTitre:(this.actuBisBisBis.titre) ? this.actuBisBisBis.titre.replace(/'/gi,"\\'") : null,
+									date:this.actuBisBisBis.date,
+									lienSource:this.actuBisBisBis.lienSource,
+									lienInt:(this.actuBisBisBis.lienInt) ? this.actuBisBisBis.lienInt.replace(/'/gi,"\\'") : null,
+									oldTitre: this.actuBisBis.titre
+								}
+							}
+						})
+						.then(res=>{
+							if(res.data=="OK"){
+								this.message="l'actualité a été modifié";
+								this.$store.dispatch('importActu')
+								this.actuBisBisBis.actu=null
+								this.actuBisBisBis.titre=null
+								this.actuBisBisBis.date=null
+								this.actuBisBisBis.lienSource=null
+								this.actuBisBisBis.lienInt=null
+								this.choix[0]= null
+								this.choix[1]= null
+								this.choix[2]= null
+								this.choix[3]= null
+							}else if(res.data=="ER"){
+								this.message="vous n'avez pas les droits, connectez vous";
+							} else if(res.data=='NO'){
+								this.message= "le nouveau titre existe déjà dans la base de donnés, choisisser un autre"
+							}
+							this.bool=false;
+						});
+					} else {
+						this.message = "veuillez renseigner le ou les champ(s) que vous voulez modifier"
+					}
 				}
 			}
 		},
