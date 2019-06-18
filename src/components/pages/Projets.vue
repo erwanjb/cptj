@@ -12,7 +12,7 @@
 		</div>
 		<div id="admin" v-if="$session.exists()">
     		<form @submit.prevent class="envoie">
-    			<p>ajouter une projet</p>
+    			<p>ajouter un projet</p>
     			<textarea v-model="proj.proj" cols="40" rows="6"></textarea><br>
     			<label for="titre">titre</label><input id="titre" type="text" v-model="proj.titre"><br>
     			<label for="date">date</label><input id="date" type="date" v-model="proj.date"><br>
@@ -21,19 +21,19 @@
     			<button @click="addProj()">click</button>
     		</form>
     		<form @submit.prevent class="envoie">
-    			<p>supprimer une projet</p>
+    			<p>supprimer un projet</p>
     			<input type="text" v-model="projBis" placeholder="titre"><br>
     			<button @click="supProj()">click</button>
     		</form>
     		<form @submit.prevent class="envoie">
-    			<p>modifier un élément d'une atualité</p>
+    			<p>modifier un élément d'un projet</p>
     			<input type="text" v-model="projBisBis.titre">
     			<button @click="modifProj()">click</button>
     			<div v-if="bool">
     				<p>quel(s) élément(s) du projet voudriez vous changer ?</p>
     				<label for="titre">titre</label><input type="checkbox" v-model="choix[0]" value="titre" id="titre">
     				<div v-if="choix[0]">
-    					<p>le titre de l'projet est: {{ projBisBis.titre }}</p>
+    					<p>le titre du projet est: {{ projBisBis.titre }}</p>
 						<input type="text" v-model="projBisBisBis.titre" placeholder="change titre">
     				</div>
     				<hr>
@@ -154,7 +154,7 @@
 						data:{
 							u:{
 								page:"projets",
-								titre:this.nl2br(this.titreBis).replace(/'/gi,"\\'"),
+								titre:this.nl2br(this.titreBis),
 							}
 						}
 					})
@@ -193,11 +193,11 @@
 								url:"/projet/addProjet",
 								data:{
 									u:{
-										proj:this.nl2br(this.proj.proj).replace(/'/gi,"\\'"),
-										titre:this.proj.titre.replace(/'/gi,"\\'"),
+										proj:this.nl2br(this.proj.proj),
+										titre:this.proj.titre,
 										date:this.proj.date,
 										lienSource:this.proj.lienSource,
-										lienInt:(this.proj.lienInt) ? this.proj.lienInt.replace(/'/gi,"\\'") : null
+										lienInt:(this.proj.lienInt) ? this.proj.lienInt : null
 									}
 								}
 							})
@@ -227,7 +227,7 @@
 							url:"/projet/supProjet",
 							data:{
 								u:{
-									proj: this.projBis.replace(/'/gi,"\\'")
+									proj: this.projBis
 								}
 							}
 						})
@@ -238,7 +238,7 @@
 								this.message="vous n'avez pas les droits, connectez vous";
 							}else{
 								this.message="le projet a été supprimé";
-								this.$store.dispatch('importProj')
+								this.$store.dispatch('importProjet')
 							}
 						});
 					}else{
@@ -300,11 +300,11 @@
 								url:"/projet/modifProjetBis",
 								data:{
 									u:{
-										proj:(this.projBisBisBis.proj) ? this.nl2br(this.projBisBisBis.proj).replace(/'/gi,"\\'") : null,
-										newTitre:(this.projBisBisBis.titre) ? this.projBisBisBis.titre.replace(/'/gi,"\\'") : null,
+										proj:(this.projBisBisBis.proj) ? this.nl2br(this.projBisBisBis.proj) : null,
+										newTitre:(this.projBisBisBis.titre) ? this.projBisBisBis.titre : null,
 										date:this.projBisBisBis.date,
 										lienSource:this.projBisBisBis.lienSource,
-										lienInt:(this.projBisBisBis.lienInt) ? this.projBisBisBis.lienInt.replace(/'/gi,"\\'") : null,
+										lienInt:(this.projBisBisBis.lienInt) ? this.projBisBisBis.lienInt : null,
 										oldTitre: this.projBisBis.titre
 									}
 								}

@@ -171,7 +171,7 @@ export default {
 				url :"/themes/addMore",
 				data:{
 					u:{
-						cat:cat.replace(/'/gi,"\\'"),
+						cat:cat,
 						nb:nb
 					}
 				}
@@ -198,7 +198,7 @@ export default {
 								u:{
 									video:this.video.video,
 									categorie:this.video.categorie,
-									titre:this.video.titre.replace(/'/gi,"\\'"),
+									titre:this.video.titre,
 									date:this.video.date,
 									}
 							}
@@ -260,7 +260,7 @@ export default {
 						url :"/themes/addCategorie",
 						data:{
 							u: {
-								cat: this.cat.replace(/'/gi,"\\'")
+								cat: this.cat
 							}
 						}
 					})
@@ -287,7 +287,7 @@ export default {
 						url :"/themes/supCategorie",
 						data:{
 							u: {
-								cat: this.catBis.replace(/'/gi,"\\'")
+								cat: this.catBis
 							}
 						}
 					})
@@ -378,7 +378,7 @@ export default {
 					data:{
 						u:{
 							page:"themes",
-							titre:this.nl2br(this.titreBis).replace(/'/gi,"\\'"),
+							titre:this.nl2br(this.titreBis),
 						}
 					}
 				})

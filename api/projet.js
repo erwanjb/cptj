@@ -104,11 +104,17 @@ module.exports = (app) => {
             if (r.length==0){
               res.send("NO");
             }else{
-              const q2= "DELETE FROM projet WHERE titre="+mysql.escape(titre);
+              const q2= 'DELETE FROM soutien WHERE id_projet=(SELECT id FROM projet WHERE titre='+ mysql.escape(titre) +')'
               connection.query(q2,(e2,r2,f2)=>{
                 if(e2) throw e2;
                 else{
-                  res.send("OK");
+                  const q3 = "DELETE FROM projet WHERE titre="+mysql.escape(titre);
+                  connection.query(q3,(e3,r3,f3)=>{
+                    if(e3) throw e3
+                    else {
+                      res.send("OK");
+                    }
+                  })
                 }
               });
             }

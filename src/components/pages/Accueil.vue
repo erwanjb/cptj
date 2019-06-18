@@ -70,7 +70,7 @@ export default {
 						url:"/apropos/modifApropos",
 						data:{
 							u:{
-								apropos: this.nl2br(this.aproposBis).replace(/'/gi,"\\'")
+								apropos: this.nl2br(this.aproposBis)
 							}
 						}
 					})
@@ -98,7 +98,7 @@ export default {
 					data:{
 						u:{
 							page:"apropos",
-							titre:this.nl2br(this.titreBis).replace(/'/gi,"\\'"),
+							titre:this.nl2br(this.titreBis),
 						}
 					}
 				})

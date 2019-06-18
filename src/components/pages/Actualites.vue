@@ -128,11 +128,11 @@ export default {
 							url:"/actualite/addActu",
 							data:{
 								u:{
-									actu:this.nl2br(this.actu.actu).replace(/'/gi,"\\'"),
-									titre:this.actu.titre.replace(/'/gi,"\\'"),
+									actu:this.nl2br(this.actu.actu),
+									titre:this.actu.titre,
 									date:this.actu.date,
 									lienSource:this.actu.lienSource,
-									lienInt:(this.actu.lienInt) ? this.actu.lienInt.replace(/'/gi,"\\'") : null
+									lienInt:(this.actu.lienInt) ? this.actu.lienInt : null
 								}
 							}
 						})
@@ -162,7 +162,7 @@ export default {
 						url:"/actualite/supActu",
 						data:{
 							u:{
-								actu: this.actuBis.replace(/'/gi,"\\'")
+								actu: this.actuBis
 							}
 						}
 					})
@@ -235,11 +235,11 @@ export default {
 							url:"/actu/modifActuBis",
 							data:{
 								u:{
-									actu:(this.actuBisBisBis.actu) ? this.nl2br(this.actuBisBisBis.actu).replace(/'/gi,"\\'") : null,
-									newTitre:(this.actuBisBisBis.titre) ? this.actuBisBisBis.titre.replace(/'/gi,"\\'") : null,
+									actu:(this.actuBisBisBis.actu) ? this.nl2br(this.actuBisBisBis.actu) : null,
+									newTitre:(this.actuBisBisBis.titre) ? this.actuBisBisBis.titre : null,
 									date:this.actuBisBisBis.date,
 									lienSource:this.actuBisBisBis.lienSource,
-									lienInt:(this.actuBisBisBis.lienInt) ? this.actuBisBisBis.lienInt.replace(/'/gi,"\\'") : null,
+									lienInt:(this.actuBisBisBis.lienInt) ? this.actuBisBisBis.lienInt : null,
 									oldTitre: this.actuBisBis.titre
 								}
 							}
@@ -281,7 +281,7 @@ export default {
 					data:{
 						u:{
 							page:"actualites",
-							titre:this.nl2br(this.titreBis).replace(/'/gi,"\\'"),
+							titre:this.nl2br(this.titreBis),
 						}
 					}
 				})
