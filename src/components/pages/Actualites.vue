@@ -28,7 +28,7 @@
     			<input type="text" v-model="actuBisBis.titre">
     			<button @click="modifActu()">click</button>
     			<div v-if="bool">
-    				<p>quel(s) élément(s) de la revue de actu voudriez vous changer ?</p>
+    				<p>quel(s) élément(s) de l'actu voudriez vous changer ?</p>
     				<label for="titre">titre</label><input type="checkbox" v-model="choix[0]" value="titre" id="titre">
     				<div v-if="choix[0]">
     					<p>le titre de l'actualité est: {{ actuBisBis.titre }}</p>
@@ -219,7 +219,7 @@ export default {
 				if(this.actuBisBisBis.titre==null && this.actuBisBisBis.actu==null && this.actuBisBisBis.date==null && this.actuBisBisBis.lienInt==null && this.actuBisBisBis.lienSource==null){
 					this.message="veuillez renseigner au moins un champ à modifier"
 				}else{
-					if(((this.choix[0] && this.actuBisBisBis.titre) || (!this.choix[0] && !this.actuBisBisBis.titre)) && ((this.choix[1] && this.actuBisBisBis.actu) || (!this.choix[1] && !this.actuBisBisBis.actu)) && ((this.choix[2] && this.actuBisBisBis.date) || (!this.choix[2] && !this.actuBisBisBis.date)) && ((this.choix[3] && this.actuBisBisBis.lienSource && this.actuBisBis.lienInt) || (!this.choix[3] && !this.actuBisBisBis.lienSource && !this.actuBisBis.lienInt))){
+					if(((this.choix[0] && this.actuBisBisBis.titre) || (!this.choix[0] && !this.actuBisBisBis.titre)) && ((this.choix[1] && this.actuBisBisBis.actu) || (!this.choix[1] && !this.actuBisBisBis.actu)) && ((this.choix[2] && this.actuBisBisBis.date) || (!this.choix[2] && !this.actuBisBisBis.date)) && ((this.choix[3] && this.actuBisBisBis.lienSource && this.actuBisBisBis.lienInt) || (!this.choix[3] && !this.actuBisBisBis.lienSource && !this.actuBisBisBis.lienInt))){
 						if(this.choix[3] && (this.actuBisBisBis.lienSource!=null || this.actuBisBisBis.lienInt!=null)){
 							if(this.actuBisBisBis.lienSource == null || this.actuBisBisBis.lienInt == null){
 								this.message="veuiller rentrer un intitulé et un source pour le lien";
@@ -334,6 +334,7 @@ $color:#ED6E13;
 .actu{
 	padding-left: 50px;
 	text-align:left;
+	max-width: 60%;
 }
 @media screen and (max-width:500px){
 	.actualite{
@@ -346,6 +347,7 @@ $color:#ED6E13;
 	}
 	.actu{
 		padding-left:20px;
+		max-width: 100%;
 	}
 	.titre{
 		width: 100%;

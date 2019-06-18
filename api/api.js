@@ -68,15 +68,16 @@ app.use((req, res, next) =>{
 // });
 
 
-const accueil = require("./accueil")(app);
+// const accueil = require("./accueil")(app);
 const portail = require("./portail")(app);
 const theme = require("./theme")(app);
 const chrono = require("./chronologique")(app);
 const actu = require("./actualite")(app);
 const apropos = require("./apropos")(app);
-const press = require("./press")(app); 
+// const press = require("./press")(app); 
 const reseau = require("./reseau")(app);
 const titre = require("./titre")(app);
+const projet = require('./projet')(app);
 
 // Redirect from http port 80 to https
 //var http = require('http');

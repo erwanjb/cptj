@@ -6,6 +6,7 @@ import Chronologique from "./components/pages/Chronologique.vue";
 import Themes from "./components/pages/Themes.vue";
 import Portail from "./components/pages/Portail.vue";
 import Apropos from "./components/pages/Apropos.vue";
+import Projet from "./components/pages/Projets.vue";
 
 
 
@@ -49,5 +50,10 @@ export const routes = [
 		path:"/portail",
 		name:"portail",
 		component:Portail
+	},
+	{
+		path:"/projets",
+		name:"projets",
+		component:Projet
 	}
 ];

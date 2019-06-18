@@ -12,7 +12,8 @@ export default new Vuex.Store({
     	nb: [],
     	tab: [],
     	tabA:[],
-    	apropos: null
+    	apropos: null,
+    	projets: []
     },
     mutations: {
     	fillCategorie(state, newCat){
@@ -48,6 +49,9 @@ export default new Vuex.Store({
     	},
     	fillApropos(state, newApropos){
     		state.apropos = newApropos
+    	},
+    	fillProjet(state, newProjet){
+    		state.projets = newProjet
     	}
     },
     actions: {
@@ -81,6 +85,15 @@ export default new Vuex.Store({
 			})
 			.then(res=>{
 				context.commit('fillApropos', res.data)
+			});
+    	},
+    	importProjet(context){
+    		axios({
+				method:"get",
+				url:"/projet"
+			})
+			.then(res=>{
+				context.commit('fillProjet', res.data)
 			});
     	}
     },
