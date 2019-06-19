@@ -208,6 +208,8 @@ export default {
 								this.message="la vidéo est déjà présente";
 							}else if(res.data.status=="ER"){
 								this.message="vous n'avez pas d'autorisation, connectez vous";
+							}else if(res.data.status=="YOUNO"){
+								this.message="il faut poster une vidéo youtube";
 							}else{
 								this.message="la vidéo a été enregistré";
 								this.$store.dispatch('importTheme')

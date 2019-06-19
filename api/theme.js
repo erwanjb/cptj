@@ -71,35 +71,39 @@ module.exports = (app) => {
                     }
                 }
                 const video = req.body.u.video.substring(i+5,j);
-                const q = "SELECT video FROM video WHERE video="+mysql.escape(video);
-                connection.query(q,(error,results,fields)=>{
-                    if(error) throw error;
-                    else{    
-                        if(results.length==1){
-                            status.status="NO";
-                            res.send(status);
-                        }else{
-                            const q2="INSERT INTO video (video, titre, date) VALUES ("+mysql.escape(video)+", "+mysql.escape(req.body.u.titre)+", "+mysql.escape(req.body.u.date)+")";
-                            connection.query(q2, (e,r,f)=>{
-                                if (e) throw e;
-                                else{
-                                    let q3= '';
-                                    for (let i=0;i<req.body.u.categorie.length;i++){
-                                        const sql="INSERT INTO join_vid_cat (id_video, id_categorie) SELECT video.id, categorie.id FROM video JOIN categorie WHERE video.video="+mysql.escape(video)+" AND categorie.type="+mysql.escape(req.body.u.categorie[i]);
-                                        q3 += q3 ? ' \; ' + sql : sql;
-                                    }
-                                    connection.query(q3,(e2,r2,f2)=>{
-                                        if (e2) throw e2;
-                                        else{
-                                            status.status="OK";
-                                            res.send(status);
+                if(video && video.match('https://www.youtube.com')) {
+                    const q = "SELECT video FROM video WHERE video="+mysql.escape(video);
+                    connection.query(q,(error,results,fields)=>{
+                        if(error) throw error;
+                        else{    
+                            if(results.length==1){
+                                status.status="NO";
+                                res.send(status);
+                            }else{
+                                const q2="INSERT INTO video (video, titre, date) VALUES ("+mysql.escape(video)+", "+mysql.escape(req.body.u.titre)+", "+mysql.escape(req.body.u.date)+")";
+                                connection.query(q2, (e,r,f)=>{
+                                    if (e) throw e;
+                                    else{
+                                        let q3= '';
+                                        for (let i=0;i<req.body.u.categorie.length;i++){
+                                            const sql="INSERT INTO join_vid_cat (id_video, id_categorie) SELECT video.id, categorie.id FROM video JOIN categorie WHERE video.video="+mysql.escape(video)+" AND categorie.type="+mysql.escape(req.body.u.categorie[i]);
+                                            q3 += q3 ? ' \; ' + sql : sql;
                                         }
-                                    });
-                                }
-                            });
-                        }
-                    }    
-                });
+                                        connection.query(q3,(e2,r2,f2)=>{
+                                            if (e2) throw e2;
+                                            else{
+                                                status.status="OK";
+                                                res.send(status);
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        }    
+                    });
+                } else {
+                    res.send({ status: 'YOUNO'})
+                }
             }else{
                 status.status="ER";
                 res.send(status);

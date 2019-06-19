@@ -49,10 +49,11 @@ h1, h2 {
   font-weight: normal;
   font-family: "LemonMilk";
   color: black;
+  margin-bottom: 50px;
 }
 
 main{
-  padding-top:100px;
+  padding-top:50px;
   width: 80%;
   margin: 0 auto;
 }
