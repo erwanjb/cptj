@@ -28,7 +28,7 @@ export default{
         "accueil",
         "toutes les vidéos",
         "vidéos par thème",
-        "projets",
+        "on s'éclate",
         "on en parle",
         "contact"
       ]

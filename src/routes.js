@@ -53,7 +53,7 @@ export const routes = [
 	},
 	{
 		path:"/projets",
-		name:"projets",
+		name:"on s'éclate",
 		component:Projet
 	}
 ];

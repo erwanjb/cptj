@@ -9,7 +9,7 @@ const history = require('connect-history-api-fallback')
 const xss = require('xss')
 
 const app = express();
-const port = 9999;
+const port = 443;
 const CryptoJS = require("crypto-js");
 
 app.use(history())
@@ -18,13 +18,13 @@ app.set('trust proxy', 1);
 // permettre les appels AJAX cross-origins (CORS...)
 app.use(cors({
   credentials: true,
-  origin: [/*'https://cachepastajoie.fr','https://www.cachepastajoie.fr',*/'http://localhost:8080', 'http://localhost']
+  origin: [/*'https://cachepastajoie.fr','https://www.cachepastajoie.fr','http://localhost:8080', 'http://localhost'*/]
 }));
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({
-	secret: "Shh, its a secret!",
+	secret: process.env.SECRET,
 	saveUninitialized: false,
 	resave: false
 }));
@@ -88,12 +88,10 @@ const projet = require('./projet')(app);
 //    res.end();
 //}).listen(80)
 
-// const options = {
-//    key: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/privkey.pem'),
-//    cert: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/cert.pem'),
-//    ca: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/chain.pem')
-// }
+const options = {
+   key: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/privkey.pem'),
+   cert: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/cert.pem'),
+   ca: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/chain.pem')
+}
 
-// https.createServer(options, app).listen(port)
-
-app.listen(port)
+https.createServer(options, app).listen(port)
