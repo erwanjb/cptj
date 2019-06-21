@@ -85,11 +85,11 @@ $color : #ED6E13;
   background-color: white;
   z-index: 1;
 }
-.item:hover, .is-active,.boutique:hover {
-  color: $color;
-}
 .item:nth-child(4), .item:nth-child(6) {
   color: blue;
+}
+.item:hover, .is-active,.boutique:hover {
+  color: $color;
 }
 .boutique{
   font-family: "LemonMilk";
