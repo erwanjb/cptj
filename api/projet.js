@@ -24,7 +24,7 @@ module.exports = (app) => {
 			});
 		})
 		ap.post('/projet/addSoutien', (req, res) => {
-			const ip = req.connection.remoteAddress
+			const ip = req.ip
 			const sql = 'SELECT * FROM ip WHERE ip='+mysql.escape(ip)
 			connection.query(sql, (e,r,f) => {
 				if(e) throw e;
