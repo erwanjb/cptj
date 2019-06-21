@@ -88,7 +88,8 @@ $color : #ED6E13;
 .item:nth-child(4), .item:nth-child(6) {
   color: blue;
 }
-.item:hover, .is-active,.boutique:hover, .item:nth-child(4).is-active .item:nth-child(6).is-active {
+
+.item:hover, .is-active,.boutique:hover, .item:nth-child(4).is-active, .item:nth-child(6).is-active {
   color: $color;
 }
 .boutique{
