@@ -67,7 +67,7 @@
     			<h3 class="titre">{{t.titre}}</h3>
     			<div class="actu">
 	    			<p v-html="t.actualite"></p>
-	    			<span v-if="t.lien_source && t.lien_int"><a :href="t.lien_source">{{t.lien_int}}</a></span>
+	    			<span v-if="t.lien_source && t.lien_int"><a target="_blank" :href="t.lien_source">{{t.lien_int}}</a></span>
 	    		</div>
     		</section>
     	</div>

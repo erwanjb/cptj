@@ -39,6 +39,9 @@ export default{
 }
 </script>
 <style lang="scss" scoped>
+img{
+  text-align:center;
+}
 $color : #ED6E13;
 .logo{
   padding-top:30px;
@@ -84,6 +87,9 @@ $color : #ED6E13;
 }
 .item:hover, .is-active,.boutique:hover {
   color: $color;
+}
+.item:nth-child(4), .item:nth-child(6) {
+  color: blue;
 }
 .boutique{
   font-family: "LemonMilk";

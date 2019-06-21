@@ -68,7 +68,7 @@
 			<h3 class="titre">{{p.titre}}</h3>
 			<div class="desc">
     			<p class="description" v-html="p.description"></p>
-    			<span class="lien" v-if="p.lien_source && p.lien_int"><a :href="p.lien_source">{{p.lien_int}}</a></span>
+    			<span class="lien" v-if="p.lien_source && p.lien_int"><a target="_blank" :href="p.lien_source">{{p.lien_int}}</a></span>
     			<hr color="lightgrey">
     			<div class="bottom">
     				clicker pour soutenir: <span class="soutien" @click="postSoutien(p.id)">{{p.soutien}}</span>
