@@ -13,7 +13,7 @@ const port = 443;
 const CryptoJS = require("crypto-js");
 
 app.use(history())
-app.set('trust proxy', 1);
+app.enable('trust proxy');
 
 // permettre les appels AJAX cross-origins (CORS...)
 app.use(cors({
