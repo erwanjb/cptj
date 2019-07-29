@@ -75,7 +75,7 @@ $color : #ED6E13;
   flex-wrap:wrap;
 }
 .itemBis,.item{
-  margin-rigth:20px;
+  margin-right:20px;
   font-size: 1rem;
   padding: 5px;
   cursor: pointer;
