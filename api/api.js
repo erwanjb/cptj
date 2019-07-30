@@ -7,11 +7,15 @@ const https = require('https');
 const fs = require('fs');
 const history = require('connect-history-api-fallback')
 const xss = require('xss')
+const CronJob = require('cron').CronJob;
+const getCron = require('./apiYoutube')
 
 const app = express();
 const port = 443;
 const CryptoJS = require("crypto-js");
 
+const job = new CronJob('0 0 15 * * *', getCron);
+job.start();
 app.use(history())
 app.enable('trust proxy');
 
