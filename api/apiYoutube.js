@@ -51,7 +51,7 @@ const youtubeAPI = async () => {
     }
     const dataExploited = data.map(elem => {
         return {
-            date: elem.snippet.publishedAt,
+            date: elem.snippet.publishedAt.slice(0,10),
             titre: elem.snippet.title,
             video: elem.snippet.resourceId.videoId
         }

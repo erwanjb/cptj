@@ -9,11 +9,14 @@ import fontawesome from "@fortawesome/fontawesome";
 import regular from "@fortawesome/fontawesome-free-regular";
 import brands from "@fortawesome/fontawesome-free-brands";
 import solid from "@fortawesome/fontawesome-free-solid";
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
 
 fontawesome.library.add(regular, brands, solid);
 
 Vue.use(VueRouter);
 Vue.use(VueSession);
+Vue.use(Antd)
 
 const router = new VueRouter({
   routes,

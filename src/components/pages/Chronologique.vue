@@ -11,7 +11,7 @@
     	<div id="main_video">
 	    	<div v-for="t in tab" class="item_video">
 	    		<h3>{{t.titre}}</h3>
-	    		<section class="video"><iframe :src="t.video"></iframe></section>
+	    		<section class="video"><iframe :src="'https://www.youtube.com/embed/'+t.video"></iframe></section>
 	    	</div>
 	    	<p v-if="nb">
 				<label @click="showMore($event)"class="show">en voir plus</label>
@@ -138,5 +138,9 @@ $color:#ED6E23;
 	cursor: pointer;
 	border: 1px solid $color;
 	color: $color;
+}
+h3{
+	width: 320px;
+	height: 100px;
 }
 </style>

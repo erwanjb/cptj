@@ -14,7 +14,7 @@ const app = express();
 const port = 443;
 const CryptoJS = require("crypto-js");
 
-const job = new CronJob('0 0 15 * * *', getCron);
+const job = new CronJob('0 03 17 * * *', getCron);
 job.start();
 app.use(history())
 app.enable('trust proxy');

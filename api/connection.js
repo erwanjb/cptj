@@ -6,6 +6,7 @@ const connection = mysql.createConnection({
 	password : process.env.PASSWORD_DB,
 	database : 'cptj',
   	port     : 3306,
+  	charset : 'utf8mb4',
   	multipleStatements: true
 });
 connection.connect();

@@ -42,8 +42,50 @@ module.exports = (app) => {
                     }
                     
                 }
-            });
+            })
         });
+
+        ap.get("/themes/allVideo", (req,res)=>{
+            if(req.session && req.session.adminConnected){
+                const q = "SELECT * FROM video ORDER BY date DESC";
+                connection.query(q,(error,results,fields)=>{
+                    if(error) throw error;
+                    else{
+                        res.send(results)
+                    }
+                });
+            }
+        });
+
+        ap.post('/themes/adCatVid', (req,res) => {
+            if(req.session && req.session.adminConnected){
+                const arr = req.body.arr
+                for (let i = 0; i < arr.length; i++) {
+                    const elem = arr[i]
+                    if (elem.check) {
+                        const sql = "INSERT INTO join_vid_cat (id_video, id_categorie) VALUES (" + mysql.escape(elem.vid) + ', (SELECT id FROM categorie WHERE type=' + mysql.escape(elem.cat) + '))'
+                        connection.query(sql, (err) => {
+                            if (err) throw err
+                            if(i == arr.length - 1) {
+                                res.send({status: 'OK'})
+                            }
+                        })
+                    }
+                    if(!elem.check) {
+                        const sql = 'DELETE FROM join_vid_cat WHERE id_video=' + mysql.escape(elem.vid) + ' AND id_categorie=(SELECT id FROM categorie WHERE type=' + mysql.escape(elem.cat) + ')'
+                        connection.query(sql, (err) => {
+                            if (err) throw err
+                            if(i == arr.length - 1) {
+                                res.send({status: 'OK'})
+                            }
+                        })
+                    }
+                }
+            } else {
+                res.send({status: 'ER'})
+            }
+        })
+
         ap.get("/themes/themesBis",(req,res)=>{
             let tab=[];
             const q="SELECT video,date FROM join_vid_cat RIGHT JOIN video ON join_vid_cat.id_video=video.id WHERE join_vid_cat.id IS NULL";
@@ -55,106 +97,7 @@ module.exports = (app) => {
                 }
             });
         });
-        ap.post("/themes/addVideo",(req,res)=>{
-            let status = {};
-            if(req.session && req.session.adminConnected){
-                let i = 0;
-                let j;
-                for(i;i<req.body.u.video.length-4;i++){
-                    if(req.body.u.video.substring(i,i+5)=="src=\""){
-                        break;
-                    }
-                }
-                for(j=i+5;j<req.body.u.video.length;j++){
-                    if(req.body.u.video.substring(j,j+1)=="\""){
-                        break;
-                    }
-                }
-                const video = req.body.u.video.substring(i+5,j);
-                if(video && video.match('https://www.youtube.com')) {
-                    const q = "SELECT video FROM video WHERE video="+mysql.escape(video);
-                    connection.query(q,(error,results,fields)=>{
-                        if(error) throw error;
-                        else{    
-                            if(results.length==1){
-                                status.status="NO";
-                                res.send(status);
-                            }else{
-                                const q2="INSERT INTO video (video, titre, date) VALUES ("+mysql.escape(video)+", "+mysql.escape(req.body.u.titre)+", "+mysql.escape(req.body.u.date)+")";
-                                connection.query(q2, (e,r,f)=>{
-                                    if (e) throw e;
-                                    else{
-                                        let q3= '';
-                                        for (let i=0;i<req.body.u.categorie.length;i++){
-                                            const sql="INSERT INTO join_vid_cat (id_video, id_categorie) SELECT video.id, categorie.id FROM video JOIN categorie WHERE video.video="+mysql.escape(video)+" AND categorie.type="+mysql.escape(req.body.u.categorie[i]);
-                                            q3 += q3 ? ' \; ' + sql : sql;
-                                        }
-                                        connection.query(q3,(e2,r2,f2)=>{
-                                            if (e2) throw e2;
-                                            else{
-                                                status.status="OK";
-                                                res.send(status);
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        }    
-                    });
-                } else {
-                    res.send({ status: 'YOUNO'})
-                }
-            }else{
-                status.status="ER";
-                res.send(status);
-            }
-        });
-        ap.post("/themes/supVideo",(req,res)=>{
-            let status = {};
-            if(req.session && req.session.adminConnected){
-                let i = 0;
-                let j;
-                for(i;i<req.body.u.video.length-4;i++){
-                    if(req.body.u.video.substring(i,i+5)=="src=\""){
-                        break;
-                    }
-                }
-                for(j=i+5;j<req.body.u.video.length;j++){
-                    if(req.body.u.video.substring(j,j+1)=="\""){
-                        break;
-                    }
-                }
-                const video = req.body.u.video.substring(i+5,j);
-                const q = "SELECT * FROM video WHERE video="+mysql.escape(video);
-                connection.query(q,(e,r,f)=>{
-                    if(e) throw e;
-                    else{
-                        if (r.length==0){
-                            status.status="NO";
-                            res.send(status);
-                        }else{
-                            const q2 ="DELETE FROM join_vid_cat WHERE id_video=(SELECT id FROM video WHERE video="+mysql.escape(video)+")";
-                            connection.query(q2,(e2,r2,f2)=>{
-                                if (e2) throw e2;
-                                else{
-                                    const q3="DELETE FROM video WHERE video="+mysql.escape(video);
-                                    connection.query(q3,(e3,r3,f3)=>{
-                                        if(e3) throw e3;
-                                        else{
-                                            status.status="OK";
-                                            res.send(status);
-                                        }
-                                    })
-                                }
-                            });         
-                        }
-                    }   
-                });
-            }else{
-                status.status="ER";
-                res.send(status);
-            }
-        });
+        // 
         ap.post("/themes/addCategorie",(req, res)=>{
             let status={};
                 if(req.session && req.session.adminConnected){
@@ -231,6 +174,55 @@ module.exports = (app) => {
                 res.send(status);
             }  
         });
+
+        ap.post("/themes/supVideo",(req,res)=>{
+            let status = {};
+            if(req.session && req.session.adminConnected){
+                let i = 0;
+                let j;
+                for(i;i<req.body.u.video.length-4;i++){
+                    if(req.body.u.video.substring(i,i+5)=="src=\""){
+                        break;
+                    }
+                }
+                for(j=i+5;j<req.body.u.video.length;j++){
+                    if(req.body.u.video.substring(j,j+1)=="\""){
+                        break;
+                    }
+                }
+                let video = req.body.u.video.substring(i+5,j);
+                video = video.slice(30)
+                const q = "SELECT * FROM video WHERE video="+mysql.escape(video);
+                connection.query(q,(e,r,f)=>{
+                    if(e) throw e;
+                    else{
+                        if (r.length==0){
+                            status.status="NO";
+                            res.send(status);
+                        }else{
+                            const q2 ="DELETE FROM join_vid_cat WHERE id_video=(SELECT id FROM video WHERE video="+mysql.escape(video)+")";
+                            connection.query(q2,(e2,r2,f2)=>{
+                                if (e2) throw e2;
+                                else{
+                                    const q3="DELETE FROM video WHERE video="+mysql.escape(video);
+                                    connection.query(q3,(e3,r3,f3)=>{
+                                        if(e3) throw e3;
+                                        else{
+                                            status.status="OK";
+                                            res.send(status);
+                                        }
+                                    })
+                                }
+                            });         
+                        }
+                    }   
+                });
+            }else{
+                status.status="ER";
+                res.send(status);
+            }
+        });
+
         ap.post("/themes/addMore",(req,res)=>{
             const categorie = req.body.u.cat;
             const nb = req.body.u.nb;
@@ -253,99 +245,7 @@ module.exports = (app) => {
                 }
             });
         });
-        ap.post("/themes/modifVideo",(req,res)=>{
-            let status = {};
-            if(req.session && req.session.adminConnected){
-                let i = 0;
-                let j;
-                for(i;i<req.body.u.video.length-4;i++){
-                    if(req.body.u.video.substring(i,i+5)=="src=\""){
-                        break;
-                    }
-                }
-                for(j=i+5;j<req.body.u.video.length;j++){
-                    if(req.body.u.video.substring(j,j+1)=="\""){
-                        break;
-                    }
-                }
-                const video = req.body.u.video.substring(i+5,j);
-                const q = "SELECT * FROM video WHERE video="+mysql.escape(video);
-                connection.query(q,(e,r,f)=>{
-                    if(e) throw e;
-                    else{
-                        if (r.length==0) {
-                            status.status="NO";
-                            res.send(status);
-                        }else{
-                            let videoBis= {
-                                date: r[0].date,
-                                titre: r[0].titre
-                            }
-                            const q2 = "SELECT type FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE video="+mysql.escape(video)
-                            connection.query(q2,(e2,r2,f2)=>{
-                                if (e2) throw e2;
-                                else{
-                                    const cat = [];
-                                    for (var i = 0; i < r2.length; i++) {
-                                        cat.push(r2[i].type)
-                                    }
-                                    videoBis.categorie = cat;
-                                    status.status="OK";
-                                    status.video=videoBis;
-                                    res.send(status);
-                                }
-                            });
-                        }
-                    }
-                });
-            }else{
-                status.status="ER";
-                res.send(status);
-            }
-        });
-        ap.post("/themes/modifVideoBis",(req,res)=>{
-            if(req.session && req.session.adminConnected){
-                let i = 0;
-                let j;
-                for(i;i<req.body.u.video.length-4;i++){
-                    if(req.body.u.video.substring(i,i+5)=="src=\""){
-                        break;
-                    }
-                }
-                for(j=i+5;j<req.body.u.video.length;j++){
-                    if(req.body.u.video.substring(j,j+1)=="\""){
-                        break;
-                    }
-                }
-                const video = req.body.u.video.substring(i+5,j);
-                const date = req.body.u.date;
-                let q ="";
-                if(date){
-                    q += "UPDATE video SET date="+mysql.escape(date)+" WHERE video="+mysql.escape(video);
-                }
-                const titre = req.body.u.titre;
-                if(titre){
-                    const sql = "UPDATE video SET titre="+mysql.escape(titre)+" WHERE video="+mysql.escape(video);
-                    q += (q) ? "\; " + sql : sql;
-                }
-                const categorie = req.body.u.categorie;
-                if(categorie.length){
-                    const sql = "DELETE FROM join_vid_cat WHERE id_video=(SELECT id FROM video WHERE video="+mysql.escape(video)+") ";
-                    q += (q) ? "\; " + sql : sql;
-                    for (let k = 0; k < categorie.length; k++){
-                        q += "\; INSERT INTO join_vid_cat (id_video, id_categorie) SELECT video.id, categorie.id FROM video JOIN categorie WHERE video.video="+mysql.escape(video)+" AND categorie.type="+mysql.escape(categorie[k]);
-                    } 
-                }
-                connection.query(q,(e,r,f)=>{
-                    if(e) throw e;
-                    else{
-                        res.send("OK");
-                    }
-                });
-            }else{
-                res.send("ER");
-            }
-        });
+        
 	};
 	return themesAPI(app);
 };
