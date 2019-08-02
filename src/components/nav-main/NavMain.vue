@@ -48,7 +48,6 @@ $color : #ED6E13;
   display: block;
   margin: 0 auto;
   width:200px;
-  height:75px;
   background-color:white;
   z-index: 1;
   padding-bottom: 50px;
