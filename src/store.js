@@ -11,6 +11,7 @@ export default new Vuex.Store({
     	categoriebis: [],
     	nb: [],
     	tab: [],
+        tabTotal: [],
     	tabA:[],
     	apropos: null,
     	projets: []
@@ -44,6 +45,9 @@ export default new Vuex.Store({
     	fillTab(state, newTab){
     		state.tab = newTab
     	},
+        fillTabTotal(state, newTabT){
+            state.tabTotal = newTabT
+        },
     	fillTabA(state, newTab){
     		state.tabA = newTab
     	},
@@ -64,6 +68,7 @@ export default new Vuex.Store({
 				context.commit('fillCategorie', res.data.categorie)
 				context.commit('fillCategorieBis')
 				context.commit('fillTab', res.data.tab)
+                context.commit('fillTabTotal', res.data.tabTotal)
 				if(!context.state.nb.length){
 					context.commit('fillNb', res.data.nb)
 				}

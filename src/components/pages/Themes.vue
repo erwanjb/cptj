@@ -28,7 +28,7 @@
     			<p>choisir la/les catégorie(s) des vidéos</p>
     			<a-table :dataSource="dataSource" :columns="columns">
     				<input v-for="(c,i) in categorie" type="checkbox" :slot="c" slot-scope="text,record"  href="javascript:;" v-model="catVid[i].find(e => e.vid == record.key).check" />
-    				<iframe slot="video" slot-scope="text,record" :src="'https://www.youtube.com/embed/' + record.url"></iframe>
+    				<iframe width="200" height="120" slot="video" slot-scope="text,record" :src="'https://www.youtube.com/embed/' + record.url"></iframe>
     			</a-table>
     			<button @click="submitCatVid()">enregistrer les catégories des vidéos</button>
     		</form>
@@ -41,10 +41,12 @@
     				<input type="hidden" :value="c">
     			</div>
     		</div>
-			<section v-for="(c,i) in categorie" style="display:none;" class="video_categorie" :id="c">
+			<section v-for="(c,i) in categorie" class="video_categorie" :id="c">
 				<div v-for="t in tab[i]" class="item_video">
 					<h3>{{t.titre}}</h3>
-					<section class="video"><iframe :src="'https://www.youtube.com/embed/'+t.video"></iframe></section>
+					<section class="video">
+						<iframe width="320" height="200" class="video-frame" :src="'https://www.youtube.com/embed/'+t.video" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					</section>
 				</div>
 				<p v-if="nb[i]">
 					<label @click="showMore($event)"class="show">en voir plus</label>
@@ -63,6 +65,9 @@ export default {
 	computed: {
 		nb(){
 			return this.$store.state.nb
+		},
+		tabTotal() {
+			return this.$store.state.tabTotal
 		},
 		tab(){
 			return this.$store.state.tab
@@ -94,7 +99,7 @@ export default {
 		catVid() {
 			return this.$store.state.categorie.map((c, i) => {
 				return this.dataSource.map(ele => {
-					if(this.$store.state.tab[i].find(e => e.id_video == ele.key)){
+					if(this.$store.state.tabTotal[i].find(e => e.id_video == ele.key)){
 						return {
 							vid: ele.key,
 							check: true
@@ -131,14 +136,14 @@ export default {
 			const arr = []
 			for(let i = 0; i < this.catVid.length; i++) {
 				for(let j = 0; j < this.catVid[i].length; j++ ) {
-					if (!!this.tab[i].find(e => e.id_video == this.catVid[i][j].vid) && !this.catVid[i][j].check) {
+					if (!!this.tabTotal[i].find(e => e.id_video == this.catVid[i][j].vid) && !this.catVid[i][j].check) {
 						arr.push({
 							vid: this.catVid[i][j].vid,
 							cat: this.categorie[i],
 							check: this.catVid[i][j].check
 						})
 					}
-					if (!this.tab[i].find(e => e.id_video == this.catVid[i][j].vid) && this.catVid[i][j].check) {
+					if (!this.tabTotal[i].find(e => e.id_video == this.catVid[i][j].vid) && this.catVid[i][j].check) {
 						arr.push({
 							vid: this.catVid[i][j].vid,
 							cat: this.categorie[i],
@@ -350,6 +355,15 @@ export default {
 		}
 	},
 	mounted(){
+		setTimeout(() => {
+			const cat = document.getElementsByClassName("video_categorie");
+			console.log(cat)
+			for (let i = 0; i < cat.length; i++) {
+				console.log(i, cat)
+				cat[i].style.display="none";
+			}
+		}, 1500)
+		
 		if(!this.categorie.length || !this.tab.length) {
 			this.$store.dispatch('importTheme')
 		} 
@@ -408,5 +422,8 @@ $color: #ED6E13;
 h3{
 	width: 320px;
 	height: 100px;
+}
+.video-frame{
+    margin-bottom: 100px;
 }
 </style>

@@ -9,6 +9,7 @@ module.exports = (app) => {
                 if(error) throw error;
                 else{
                     let nbTab =[];
+                    let tabTotal = [];
                     let sections={};
                     let categorie = [];
                     let tab = [];
@@ -18,27 +19,35 @@ module.exports = (app) => {
                     }
                     sections.categorie=categorie;
                     for(let i = 0;i<categorie.length;i++){
-                        let q2 = "SELECT * FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type="+mysql.escape(categorie[i])+" ORDER BY date DESC LIMIT 0, "+nb;
-                        connection.query(q2,(e,r,f)=>{
-                            if(e) throw e;
-                            else{
-                                tab.push(r);
-                                let q3 ="SELECT * FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE categorie.type="+mysql.escape(categorie[i])+" ORDER BY date DESC LIMIT "+nb+", 1";
-                                connection.query(q3,(e2,r2,f2)=>{
-                                    if(e2) throw e2;
+                        let qTot = "SELECT * FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type="+mysql.escape(categorie[i])+" ORDER BY date DESC";
+                        connection.query(qTot,(eTot,rTot,fTot)=>{
+                            if(eTot) throw eTot;
+                            else {
+                                tabTotal.push(rTot)
+                                let q2 = "SELECT * FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE type="+mysql.escape(categorie[i])+" ORDER BY date DESC LIMIT 0, "+nb;
+                                connection.query(q2,(e,r,f)=>{
+                                    if(e) throw e;
                                     else{
-                                        if(r2.length==1){
-                                            nbTab[i]=nb;
-                                        }
-                                        if(i==categorie.length-1){
-                                            sections.nb = nbTab;
-                                            sections.tab=tab;
-                                            res.send(sections);
-                                        }
+                                        tab.push(r);
+                                        let q3 ="SELECT * FROM join_vid_cat JOIN video ON join_vid_cat.id_video=video.id JOIN categorie ON join_vid_cat.id_categorie=categorie.id WHERE categorie.type="+mysql.escape(categorie[i])+" ORDER BY date DESC LIMIT "+nb+", 1";
+                                        connection.query(q3,(e2,r2,f2)=>{
+                                            if(e2) throw e2;
+                                            else{
+                                                if(r2.length==1){
+                                                    nbTab[i]=nb;
+                                                }
+                                                if(i==categorie.length-1){
+                                                    sections.nb = nbTab;
+                                                    sections.tab=tab;
+                                                    sections.tabTotal = tabTotal;
+                                                    res.send(sections);
+                                                }
+                                            }
+                                        });
                                     }
                                 });
                             }
-                        });
+                        })
                     }
                     
                 }

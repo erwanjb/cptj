@@ -11,7 +11,9 @@
     	<div id="main_video">
 	    	<div v-for="t in tab" class="item_video">
 	    		<h3>{{t.titre}}</h3>
-	    		<section class="video"><iframe :src="'https://www.youtube.com/embed/'+t.video"></iframe></section>
+	    		<section class="video">
+    				<iframe allowfullscreen="allowfullscreen" class="video-frame" :src="'https://www.youtube.com/embed/'+t.video" width="320" height="200"></iframe>
+	    		</section>
 	    	</div>
 	    	<p v-if="nb">
 				<label @click="showMore($event)"class="show">en voir plus</label>
@@ -143,4 +145,9 @@ h3{
 	width: 320px;
 	height: 100px;
 }
+
+.video-frame{
+    margin-bottom: 100px; 
+}
+
 </style>
