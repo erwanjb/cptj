@@ -118,4 +118,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#apropos{
+	width: 60%;
+	margin: 0 auto;
+}
+@media screen and (max-width:800px) { 
+	#apropos{
+		width: 90%;
+	}
+}
 </style>

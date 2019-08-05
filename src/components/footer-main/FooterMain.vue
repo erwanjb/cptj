@@ -187,6 +187,7 @@ export default{
 		display:flex;
 		flex-direction: column;
 		margin-right: 20px;
+		text-align: center;
 	}
 	#ancre{
 		width: 50px;

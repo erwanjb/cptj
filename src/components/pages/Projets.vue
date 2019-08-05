@@ -349,6 +349,7 @@
 		padding-bottom: 10px;
 	}
 	.titre{
+		padding: 0 20px;
 		width: 40%;
 		border-right: 1px solid lightgrey;	
 	}

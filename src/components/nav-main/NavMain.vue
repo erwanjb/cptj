@@ -10,9 +10,9 @@
         class="item" active-class="is-active" exact>
           <span>{{ page }}</span>
         </router-link>
-        <li class="item">
+        <!-- <li class="item">
           <a href="https://cachepastajoie.niceshop.co/" target="_blank" class="boutique">Boutique</a>
-        </li>
+        </li> -->
       </ul>
     </nav>
   </div>
