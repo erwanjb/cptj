@@ -33,7 +33,7 @@
 	    	</form>
 	    	<form @submit.prevent class="envoie">
     			<p>modifier un/des élément(s) d'un logo</p>
-    			<input type="text" v-model="logobisbis.titre">
+    			<input type="text" v-model="logobisbis.titre" placeholder="titre du logo">
     			<button @click="modifLogo()">click</button>
     			<div v-if="bool2">
     				<p>quel(s) élément(s) du logo voudriez vous changer ?</p>
