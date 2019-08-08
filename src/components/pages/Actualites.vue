@@ -37,7 +37,7 @@
     				<hr>
     				<label for="actu">actualité</label><input type="checkbox" v-model="choix[1]" value="actu" id="actu">
     				<div v-if="choix[1]">
-    					<textarea v-model="actuBisBisBis.actu" placeholder="change revue de actue"></textarea>
+    					<textarea v-model="actuBisBisBis.actu" placeholder="change text de l'actu"></textarea>
     				</div>
     				<hr>
     				<label for="date">date</label><input type="checkbox" v-model="choix[2]" value="date" id="date">

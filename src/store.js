@@ -14,7 +14,8 @@ export default new Vuex.Store({
         tabTotal: [],
     	tabA:[],
     	apropos: null,
-    	projets: []
+    	projets: [],
+        logo: []
     },
     mutations: {
     	fillCategorie(state, newCat){
@@ -56,7 +57,10 @@ export default new Vuex.Store({
     	},
     	fillProjet(state, newProjet){
     		state.projets = newProjet
-    	}
+    	},
+        fillLogo(state, newLogo){
+            state.logo = newLogo
+        }
     },
     actions: {
     	importTheme(context){
@@ -100,7 +104,16 @@ export default new Vuex.Store({
 			.then(res=>{
 				context.commit('fillProjet', res.data)
 			});
-    	}
+    	},
+        importLogo(context){
+            axios({
+                method: 'get',
+                url: '/accueil/logo'
+            })
+            .then(res =>{
+                context.commit('fillLogo', res.data)
+            })
+        }
     },
     getters: {}
 })
