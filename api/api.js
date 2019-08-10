@@ -56,22 +56,6 @@ app.use((req, res, next) =>{
 	next()
 })
 
-// ## CORS middleware
-// 
-// see: http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
-
-
-// app.get('/', function(req, res){
-// 	if (req.session.toto){
-// 		req.session.toto++;
-// 	}else{
-// 		req.session.toto=1;
-// 	}
-// 	res.send("toto vaut:" + req.session.toto);
-// 	console.log(req.session);
-// });
-
-
 // const accueil = require("./accueil")(app);
 const portail = require("./portail")(app);
 const theme = require("./theme")(app);
@@ -83,19 +67,26 @@ const reseau = require("./reseau")(app);
 const titre = require("./titre")(app);
 const projet = require('./projet')(app);
 
-// Redirect from http port 80 to https
-//var http = require('http');
-	
-//http.createServer(function (req, res) {
-//	console.log('toto')
-//    res.writeHead(301, { "Location": "https://cachepastajoie.fr:" + port});
-//    res.end();
-//}).listen(80)
-
-const options = {
+/* const options = {
    key: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/privkey.pem'),
    cert: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/cert.pem'),
    ca: fs.readFileSync('/etc/letsencrypt/live/cachepastajoie.fr/chain.pem')
 }
 
-https.createServer(options, app).listen(port)
+https.createServer(options, app).listen(port) */
+
+require("greenlock-express")
+    .create({
+        email: "wawan.jb@gmail.com", // The email address of the ACME user / hosting provider
+        agreeTos: true, // You must accept the ToS as the host which handles the certs
+        configDir: "~/acme/", // Writable directory where certs will be saved
+        communityMember: true, // Join the community to get notified of important updates
+        telemetry: true, // Contribute telemetry data to the project
+ 
+        // Using your express app:
+        // simply export it as-is, then include it here
+        app: app
+ 
+        //, debug: true
+    })
+    .listen(443);
