@@ -100,7 +100,7 @@ var greenlock = Greenlock.create({
 	configDir: "~/acme/",
 
 	// Get notified of important updates and help me make greenlock better
-	communityMember: true
-
+	communityMember: true,
+	app: app
 	//, debug: true
 }).listen(8080, 443);
