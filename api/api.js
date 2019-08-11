@@ -81,7 +81,7 @@ var greenlock = Greenlock.create({
 	// Let's Encrypt v2 is ACME draft 11
 	version: "draft-11",
 
-	server: "https://acme-staging-v02.api.letsencrypt.org/directory",
+	server: "https://acme-v02.api.letsencrypt.org/directory",
 	// Note: If at first you don't succeed, stop and switch to staging
 	// https://acme-staging-v02.api.letsencrypt.org/directory
 
