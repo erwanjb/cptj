@@ -94,6 +94,9 @@ var greenlock = Greenlock.create({
 	// You MUST change these to valid domains
 	// NOTE: all domains will validated and listed on the certificate
 	approvedDomains: ["cachepastajoie.fr", "www.cachepastajoie.fr"],
+	challenges: { 
+		'dns-01': require('acme-dns-01-cli').create({ debug: true })
+    },
 
 	// You MUST have access to write to directory where certs are saved
 	// ex: /home/foouser/acme/etc
