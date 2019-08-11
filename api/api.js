@@ -22,7 +22,7 @@ app.enable('trust proxy');
 // permettre les appels AJAX cross-origins (CORS...)
 app.use(cors({
   credentials: true,
-  origin: [/*'https://cachepastajoie.fr','https://www.cachepastajoie.fr','http://localhost:8080', 'http://localhost'*/]
+  origin: ['https://acme-v02.api.letsencrypt.org' /*'https://cachepastajoie.fr','https://www.cachepastajoie.fr','http://localhost:8080', 'http://localhost'*/]
 }));
 
 app.use(bodyParser.json());
@@ -81,7 +81,7 @@ var greenlock = Greenlock.create({
 	// Let's Encrypt v2 is ACME draft 11
 	version: "draft-11",
 
-	server: "https://acme-staging-v02.api.letsencrypt.org/directory",
+	server: "https://acme-v02.api.letsencrypt.org/directory",
 	// Note: If at first you don't succeed, stop and switch to staging
 	// https://acme-staging-v02.api.letsencrypt.org/directory
 
