@@ -102,6 +102,7 @@ var greenlock = Greenlock.create({
 
 	// Get notified of important updates and help me make greenlock better
 	communityMember: true,
+	debug: true,
 	app: app
 	//, debug: true
 }).listen(8080, 443);
