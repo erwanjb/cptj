@@ -105,8 +105,9 @@ var greenlock = Greenlock.create({
 	//, debug: true
 });
 
-console.log(greenlock.tlsOptions)
+// spdy is a drop-in replacement for the https API
+var spdyOptions = Object.assign({}, greenlock.tlsOptions);
+spdyOptions.spdy = { protocols: ["h2", "http/1.1"], plain: false };
+var server = require("spdy").createServer(spdyOptions, app)
 
-https.createServer(greenlock.tlsOptions, app).listen(port, () => {
-	console.log(port)
-})
+server.listen(port)
