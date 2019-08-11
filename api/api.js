@@ -108,4 +108,6 @@ var greenlock = Greenlock.create({
 	debug: true,
 	app: app
 	//, debug: true
-}).listen(8080, 443);
+})
+
+https.createServer(greenlock.tlsOptions, app).listen(port)
